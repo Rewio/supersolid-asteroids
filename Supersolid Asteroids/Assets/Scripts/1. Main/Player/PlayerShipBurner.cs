@@ -7,7 +7,7 @@ public class PlayerShipBurner : MonoBehaviour {
 	// Inspector Variables:
 	//============================================================
 
-	[SerializeField] protected SpriteRenderer shipBurnerRenderer;
+	[SerializeField] private SpriteRenderer shipBurnerRenderer;
 
 	//============================================================
 	// Private Fields:

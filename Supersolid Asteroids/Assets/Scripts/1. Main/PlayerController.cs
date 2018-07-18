@@ -19,6 +19,11 @@ public class PlayerController : BoundaryController {
 	[SerializeField] private GameObject player;
 	[SerializeField] private Rigidbody2D playerRigidbody;
 
+	[Space(6)]
+	[SerializeField] private GameObject playerBullet;
+	[SerializeField] private GameObject bulletSpawnPoint;
+	[SerializeField] private GameObject bulletContainer;
+
 
 	//============================================================
 	// Unity Lifecycle:
@@ -39,6 +44,10 @@ public class PlayerController : BoundaryController {
 		}
 		else if (Input.GetKey(KeyCode.D)) {
 			player.transform.Rotate(-ROTATION_DIRECTION, ROTATION_ANGLE);
+		}
+
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			Instantiate(playerBullet, bulletSpawnPoint.transform.position, player.transform.localRotation, bulletContainer.transform);
 		}
 	}
 
