@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : BoundaryController {
 
 	//============================================================
 	// Constants:
@@ -19,11 +19,13 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private GameObject player;
 	[SerializeField] private Rigidbody2D playerRigidbody;
 
+
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
 
-	private void Update() {
+	public override void Update() {
+		base.Update();
 
 		// debug key to reset the players position, velocity and angular velocity.
 		if (Input.GetKeyDown(KeyCode.Return)) {
