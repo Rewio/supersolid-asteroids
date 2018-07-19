@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1851882194945256}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.4000003, y: -1.194, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -173,10 +173,8 @@ MonoBehaviour:
   gameoCollider: {fileID: 60464049698370716}
   gameoGameObject: {fileID: 1851882194945256}
   rbody: {fileID: 50862765496476898}
-  initialVelocityModifier: 1.5
-  velocityModifierIncrement: 2
-  mediumAsteroidToSpawn: {fileID: 0}
-  smallAsteroidToSpawn: {fileID: 0}
+  deathParticleEmitter: {fileID: 1259591222695266, guid: 6e6bb3fa98e344541b73d89e6c12b771,
+    type: 2}
 --- !u!212 &212094630225387244
 SpriteRenderer:
   m_ObjectHideFlags: 1
