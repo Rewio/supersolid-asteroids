@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour {
 
 	private void Start() {
 
-		// record the time which we spawned the object, and the time when it should die
+		// record the times for when the object was spawned and when it is due to be destroyed
 		spawnTime = Time.time;
 		deathTime = spawnTime + lifetime;
 
@@ -33,10 +33,16 @@ public class Bullet : MonoBehaviour {
 
 	private void Update() {
 
-		// if the objects lifetime has elapsed, destroy it
+		// if our lifetime has elapsed, destroy ourself
 		if (Time.time > deathTime) {
 			Destroy(gameObject);
 		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D col) {
+
+		// we've collided with something, we must be destroyed
+		Destroy(gameObject);
 	}
 
 }
