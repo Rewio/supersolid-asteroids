@@ -29,9 +29,24 @@ public abstract class BoundaryController : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	public virtual void Awake() {
+	public virtual void Start() {
+
+		// TODO: fix this 
+		if (mainCamera == null) {
+			mainCamera = Camera.main;
+		}
+		
 		planes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
 	}
+
+//	public void Start() {
+//
+//		float vertical   = mainCamera.orthographicSize;
+//		float horizontal = vertical * Screen.width / Screen.height;
+//
+//		print(vertical + " - " + horizontal);
+//
+//	}
 
 	public virtual void Update() {
 
