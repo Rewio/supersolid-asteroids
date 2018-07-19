@@ -16,6 +16,7 @@ public class AsteroidController : MonoBehaviour {
 	[SerializeField] private List<Transform> asteroidSpawnPositions;
 	[SerializeField] private Transform spawnedAsteroidsContainer;
 	[SerializeField] private float spawnOffsetMultiplier;
+	[SerializeField] private GameObject asteroidDeathParticles;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -33,7 +34,7 @@ public class AsteroidController : MonoBehaviour {
 
 			// spawn the new asteroid with the previously generated values, then initialise it
 			Asteroid newAsteroid = Instantiate(largeAsteroids[asteroidToSpawn], asteroidSpawnLocation, Quaternion.identity, spawnedAsteroidsContainer);
-			newAsteroid.Init(Asteroid.AsteroidSizes.Large, spawnedAsteroidsContainer, mediumAsteroids[0], smallAsteroids[0]); // TODO: change the medium and small asteroid to spawn.
+			newAsteroid.Init(Asteroid.AsteroidSizes.Large, spawnedAsteroidsContainer, mediumAsteroids[0], smallAsteroids[0], asteroidDeathParticles); // TODO: change the medium and small asteroid to spawn.
 		}
 	}
 

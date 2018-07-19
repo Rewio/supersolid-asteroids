@@ -3,6 +3,12 @@
 public class Asteroid : BoundaryController {
 
 	//============================================================
+	// Constants:
+	//============================================================
+
+	private const float VELOCITY_MODIFIER = 1.5f;
+
+	//============================================================
 	// Type Definitions:
 	//============================================================
 
@@ -16,15 +22,9 @@ public class Asteroid : BoundaryController {
 	// Inspector Variables:
 	//============================================================
 
-	[Space(Helper.INSPECTOR_SPACE_BIG)]
+	[Space(Helper.INSPECTOR_SPACE)]
 
 	[SerializeField] private Rigidbody2D rbody;
-
-	[SerializeField] private float initialVelocityModifier;
-	[SerializeField] private float velocityModifierIncrement;
-
-	[SerializeField] private Asteroid mediumAsteroidToSpawn;
-	[SerializeField] private Asteroid smallAsteroidToSpawn;
 
 	//============================================================
 	// Private Fields:
@@ -35,17 +35,24 @@ public class Asteroid : BoundaryController {
 	private AsteroidSizes asteroidSize;
 
 	private Transform asteroidContainer;
+	private Asteroid mediumAsteroidToSpawn;
+	private Asteroid smallAsteroidToSpawn;
+
+	private GameObject deathParticles;
 
 	//============================================================
 	// Public Methods:
 	//============================================================
 
-	public void Init(AsteroidSizes anAsteroidSize, Transform anAsteroidContainer, Asteroid aMediumAsteroidToSpawn, Asteroid aSmallAsteroidToSpawn) {
+	public void Init(AsteroidSizes anAsteroidSize, Transform anAsteroidContainer, Asteroid aMediumAsteroidToSpawn, Asteroid aSmallAsteroidToSpawn, 
+	                 GameObject aDeathParticle) {
 		asteroidSize      = anAsteroidSize;
 		asteroidContainer = anAsteroidContainer;
 
 		mediumAsteroidToSpawn = aMediumAsteroidToSpawn;
 		smallAsteroidToSpawn  = aSmallAsteroidToSpawn;
+
+		deathParticles = aDeathParticle;
 
 		// flag that we have been initialised so things can begin to happen
 		hasBeenInitialised = true;
@@ -58,7 +65,9 @@ public class Asteroid : BoundaryController {
 	public override void Start() {
 		base.Start();
 
-		rbody.velocity = Random.insideUnitCircle * initialVelocityModifier;
+		// add some velocity to the asteroid to get it moving in a random direction at a random speed
+		Vector2 startingVelocity = new Vector2(Random.Range(0, 2), Random.Range(0, 2));
+		rbody.velocity = startingVelocity * VELOCITY_MODIFIER;
 	}
 
 	public override void Update() {
@@ -75,15 +84,23 @@ public class Asteroid : BoundaryController {
 		// we only want to split into more asteroids if we're either large or medium. Small asteroids do not split
 		if (asteroidSize != AsteroidSizes.Small) {
 			for (int i = 0; i < 2; i++) {
-				Vector3  positionOffset  = Random.insideUnitCircle;
-				Asteroid asteroidToSpawn = (asteroidSize == AsteroidSizes.Large) ? mediumAsteroidToSpawn : smallAsteroidToSpawn;
-				Asteroid newAsteroid     = Instantiate(asteroidToSpawn, gameObject.transform.localPosition + positionOffset, Quaternion.identity);
 
+				// add a spawn offset to the new asteroids so they're not ontop of each other, and randomise their rotation
+				Vector3 asteroidSpawnOffset = Random.insideUnitCircle * 0.5f;
+				Quaternion asteroidStartingRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360)));
+
+				// figure out which asteroid we're suppose to be spawning, then instantiate it
+				Asteroid asteroidToSpawn = (asteroidSize == AsteroidSizes.Large) ? mediumAsteroidToSpawn : smallAsteroidToSpawn;
+				Asteroid newAsteroid     = Instantiate(asteroidToSpawn, transform.position + asteroidSpawnOffset, asteroidStartingRotation, asteroidContainer);
+
+				// initialise our new asteroid with the information it requires
 				AsteroidSizes newAsteroidSize = (asteroidSize == AsteroidSizes.Large) ? AsteroidSizes.Medium : AsteroidSizes.Small;
-				newAsteroid.Init(newAsteroidSize, gameObject.transform.parent, mediumAsteroidToSpawn, smallAsteroidToSpawn);
+				newAsteroid.Init(newAsteroidSize, asteroidContainer, mediumAsteroidToSpawn, smallAsteroidToSpawn, deathParticles);
 			}
 		}
 
+		// create our death particles then destroy the gameobject
+		Instantiate(deathParticles, col.transform.position, Quaternion.identity, asteroidContainer);
 		Destroy(gameObject);
 	}
 

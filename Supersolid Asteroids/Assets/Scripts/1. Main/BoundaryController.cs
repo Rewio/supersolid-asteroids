@@ -53,8 +53,6 @@ public abstract class BoundaryController : MonoBehaviour {
 		// if we are no-longer visible by the main camera...
 		if (!GeometryUtility.TestPlanesAABB(planes, gameoCollider.bounds)) {
 
-			print("Yes");
-
 			// grab our current position so we can figure from which direction we exitted the screen.
 			Vector2 currentPosition = gameoGameObject.transform.position;
 
