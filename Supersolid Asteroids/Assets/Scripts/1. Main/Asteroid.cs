@@ -6,7 +6,8 @@ public class Asteroid : BoundaryController {
 	// Constants:
 	//============================================================
 
-	private const float VELOCITY_MODIFIER = 1.25f;
+	private const float VELOCITY_MODIFIER = 2f;
+	private const float MAXIMUM_VELOCITY_ADJUSTMENT = 60;
 
 	//============================================================
 	// Type Definitions:
@@ -90,9 +91,14 @@ public class Asteroid : BoundaryController {
 				Asteroid asteroidToSpawn = (asteroidSize == AsteroidSizes.Large) ? mediumAsteroidToSpawn : smallAsteroidToSpawn;
 				Asteroid newAsteroid     = Instantiate(asteroidToSpawn, transform.position + asteroidSpawnOffset, asteroidStartingRotation, asteroidContainer);
 
+				// here, we are slightly adjusting the angle of velocity so the asteroids direction changes
+				// this is randomised so the new asteroids head in their own directions
+				Quaternion velocityAdjustment = Quaternion.AngleAxis(Random.Range(-MAXIMUM_VELOCITY_ADJUSTMENT, MAXIMUM_VELOCITY_ADJUSTMENT), transform.forward);
+				Vector3 adjustedVelocity      = velocityAdjustment * initialVelocity;
+
 				// initialise our new asteroid with the information it requires
 				AsteroidSizes newAsteroidSize = (asteroidSize == AsteroidSizes.Large) ? AsteroidSizes.Medium : AsteroidSizes.Small;
-				newAsteroid.Init(newAsteroidSize, asteroidContainer, mediumAsteroidToSpawn, smallAsteroidToSpawn, deathParticles, initialVelocity * VELOCITY_MODIFIER);
+				newAsteroid.Init(newAsteroidSize, asteroidContainer, mediumAsteroidToSpawn, smallAsteroidToSpawn, deathParticles, adjustedVelocity * VELOCITY_MODIFIER);
 			}
 		}
 
