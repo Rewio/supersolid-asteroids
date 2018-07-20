@@ -32,9 +32,13 @@ public class AsteroidController : MonoBehaviour {
 			// select a random spawn location for the asteroid, based on the spawn locations, adding a slight offset for a bit more variety
 			Vector2 asteroidSpawnLocation = (Vector2) asteroidSpawnPositions[Random.Range(0, asteroidSpawnPositions.Count)].position + (Random.insideUnitCircle * spawnOffsetMultiplier);
 
+			// generate a random starting velocity for the asteroid.
+			Vector2 asteroidInitialVelocity = new Vector2(Random.Range(-1, 1f), Random.Range(-1, 1f));
+
 			// spawn the new asteroid with the previously generated values, then initialise it
 			Asteroid newAsteroid = Instantiate(largeAsteroids[asteroidToSpawn], asteroidSpawnLocation, Quaternion.identity, spawnedAsteroidsContainer);
-			newAsteroid.Init(Asteroid.AsteroidSizes.Large, spawnedAsteroidsContainer, mediumAsteroids[0], smallAsteroids[0], asteroidDeathParticles); // TODO: change the medium and small asteroid to spawn.
+			newAsteroid.Init(Asteroid.AsteroidSizes.Large, spawnedAsteroidsContainer, mediumAsteroids[0], smallAsteroids[0], asteroidDeathParticles, 
+			                 asteroidInitialVelocity); // TODO: change the medium and small asteroid to spawn.
 		}
 	}
 

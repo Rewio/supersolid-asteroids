@@ -6,7 +6,7 @@ public class Asteroid : BoundaryController {
 	// Constants:
 	//============================================================
 
-	private const float VELOCITY_MODIFIER = 1.5f;
+	private const float VELOCITY_MODIFIER = 1.25f;
 
 	//============================================================
 	// Type Definitions:
@@ -40,12 +40,14 @@ public class Asteroid : BoundaryController {
 
 	private GameObject deathParticles;
 
+	private Vector2 initialVelocity;
+
 	//============================================================
 	// Public Methods:
 	//============================================================
 
 	public void Init(AsteroidSizes anAsteroidSize, Transform anAsteroidContainer, Asteroid aMediumAsteroidToSpawn, Asteroid aSmallAsteroidToSpawn, 
-	                 GameObject aDeathParticle) {
+	                 GameObject aDeathParticle, Vector2 anInitialVelocity) {
 		asteroidSize      = anAsteroidSize;
 		asteroidContainer = anAsteroidContainer;
 
@@ -54,6 +56,9 @@ public class Asteroid : BoundaryController {
 
 		deathParticles = aDeathParticle;
 
+		initialVelocity = anInitialVelocity;
+		rbody.velocity  = initialVelocity;
+
 		// flag that we have been initialised so things can begin to happen
 		hasBeenInitialised = true;
 	}
@@ -61,14 +66,6 @@ public class Asteroid : BoundaryController {
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
-
-	public override void Start() {
-		base.Start();
-
-		// add some velocity to the asteroid to get it moving in a random direction at a random speed
-		Vector2 startingVelocity = new Vector2(Random.Range(0, 2), Random.Range(0, 2));
-		rbody.velocity = startingVelocity * VELOCITY_MODIFIER;
-	}
 
 	public override void Update() {
 		base.Update();
@@ -95,7 +92,7 @@ public class Asteroid : BoundaryController {
 
 				// initialise our new asteroid with the information it requires
 				AsteroidSizes newAsteroidSize = (asteroidSize == AsteroidSizes.Large) ? AsteroidSizes.Medium : AsteroidSizes.Small;
-				newAsteroid.Init(newAsteroidSize, asteroidContainer, mediumAsteroidToSpawn, smallAsteroidToSpawn, deathParticles);
+				newAsteroid.Init(newAsteroidSize, asteroidContainer, mediumAsteroidToSpawn, smallAsteroidToSpawn, deathParticles, initialVelocity * VELOCITY_MODIFIER);
 			}
 		}
 
