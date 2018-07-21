@@ -174,7 +174,7 @@ MonoBehaviour:
   gameoCollider: {fileID: 60394083774541506}
   gameoGameObject: {fileID: 1669237610223744}
   rbody: {fileID: 50296606911602380}
-  deathParticleEmitter: {fileID: 1259591222695266, guid: 6e6bb3fa98e344541b73d89e6c12b771,
+  deathParticles: {fileID: 1259591222695266, guid: 6e6bb3fa98e344541b73d89e6c12b771,
     type: 2}
 --- !u!212 &212784551073848494
 SpriteRenderer:
