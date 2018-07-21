@@ -32,11 +32,13 @@ public class PlayerController : BoundaryController {
 	public override void Update() {
 		base.Update();
 
+#if UNITY_EDITOR
 		// debug key to reset the players position, velocity and angular velocity.
 		if (Input.GetKeyDown(KeyCode.Return)) {
 			player.transform.position   = Vector3.zero;
 			playerRigidbody.velocity    = Vector2.zero;
 		}
+#endif
 
 		// responsible for rotating the player
 		if (Input.GetKey(KeyCode.A)) {
