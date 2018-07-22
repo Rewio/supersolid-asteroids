@@ -1,4 +1,8 @@
-﻿public static class Helper {
+﻿using System;
+using System.Collections;
+using UnityEngine;
+
+public class Helper : MonoBehaviour {
 
 	//============================================================
 	// Decorator Variables:
@@ -12,5 +16,22 @@
 	//============================================================
 
 	public delegate void EventHandler();
+
+	//============================================================
+	// Helpful Methods:
+	//============================================================
+
+	public void InvokeActionDelayed (Action action, float delay) {
+		StartCoroutine(InvokeActionDelayedCoroutine(action, delay));
+	}
+
+	private IEnumerator InvokeActionDelayedCoroutine (Action action, float delay) {
+
+		// wait the desired amount of time
+		yield return new WaitForSeconds(delay);
+
+		// after waiting, invoke the action
+		action.Invoke();
+	}
 
 }
