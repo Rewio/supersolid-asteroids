@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour {
 		deathTime = spawnTime + lifetime;
 
 		// add some initial velocity to the bullet so it can begin moving
-		rbody.velocity = transform.up * velocityModifier;
+		rbody.velocity = (transform.up * velocityModifier) * Time.fixedDeltaTime;
 	}
 
 	private void Update() {

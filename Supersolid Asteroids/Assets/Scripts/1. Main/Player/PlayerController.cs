@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField] private Helper helper;
 
+	[Space(Helper.INSPECTOR_SPACE)]
+
 	[SerializeField] private Player playerPrefab;
 	[SerializeField] private Transform bulletContainer;
 

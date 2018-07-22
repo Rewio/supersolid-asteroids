@@ -11,9 +11,10 @@ public class AsteroidController : MonoBehaviour {
 
 	private const int ASTEROID_SPLIT_AMOUNT = 2;
 
-	private const float ASTEROID_VELOCITY_MODIFIER  = 2f;
+	private const float ASTEROID_VELOCITY_MODIFIER  = 1.5f;
+	private const float ASTEROID_MAXIMUM_VELOCITY   = 100f;
 	private const float ASTEROID_SPAWN_MODIFIER     = 0.5f;
-	private const float MAXIMUM_VELOCITY_ADJUSTMENT = 50f;
+	private const float MAXIMUM_VELOCITY_ADJUSTMENT = 45f;
 
 	//============================================================
 	// Events:
@@ -105,7 +106,8 @@ public class AsteroidController : MonoBehaviour {
 
 			// generate a random starting position and starting velocity for the new asteroid
 			Vector2 spawnPosition = asteroidSpawnPositions[Random.Range(0, asteroidSpawnPositions.Count)].position;
-			Vector2 startingVelocity = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
+			Vector2 startingVelocity = new Vector2(Random.Range(-ASTEROID_MAXIMUM_VELOCITY, ASTEROID_MAXIMUM_VELOCITY),
+			                                       Random.Range(-ASTEROID_MAXIMUM_VELOCITY, ASTEROID_MAXIMUM_VELOCITY));
 
 			SpawnNewAsteroid(AsteroidSizes.Large, spawnPosition, startingVelocity);
 		}

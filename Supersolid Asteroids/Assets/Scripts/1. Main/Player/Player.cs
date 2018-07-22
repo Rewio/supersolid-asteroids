@@ -69,7 +69,7 @@ public class Player : BoundaryController {
 
 		// responsible for moving the player forwards
 		if (Input.GetKey(KeyCode.W)) {
-			playerRbody.AddForce((transform.up * Time.deltaTime) * FORCE_STRENGTH, ForceMode2D.Impulse);
+			playerRbody.AddForce((transform.up * FORCE_STRENGTH) * Time.fixedDeltaTime, ForceMode2D.Impulse);
 		}
 	}
 

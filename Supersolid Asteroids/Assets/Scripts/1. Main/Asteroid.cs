@@ -69,7 +69,7 @@ public class Asteroid : BoundaryController {
 		AsteroidSize = anAsteroidSize;
 
 		AsteroidVelocity = anAsteroidVelocity;
-		rbody.velocity   = AsteroidVelocity;
+		rbody.velocity   = AsteroidVelocity * Time.fixedDeltaTime;
 
 		// flag that we have been initialised so things can begin to happen
 		hasBeenInitialised = true;
