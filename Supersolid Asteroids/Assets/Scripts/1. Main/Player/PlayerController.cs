@@ -1,57 +1,93 @@
 ﻿using UnityEngine;
 
-public class PlayerController : BoundaryController {
+public class PlayerController : MonoBehaviour {
 
 	//============================================================
 	// Constants:
 	//============================================================
 
-	private const float FORCE_STRENGTH = 10f;
-	private const float ROTATION_SPEED = 300f;
-	private readonly Vector3 ROTATION_DIRECTION = new Vector3(0, 0, 1);
+	private const int NUM_STARTING_LIVES = 3;
+
+	private const string PLAYER_NAME = "Player";
+
+	private const float PLAYER_RESPAWN_TIME = 2f;
+	private const float PLAYER_INVULN_TIME  = 2f;
+
+	//============================================================
+	// Events:
+	//============================================================
+
+	public static event Helper.EventHandler GameOverEvent;
 
 	//============================================================
 	// Inspector Variables:
 	//============================================================
 
-	[Space(Helper.INSPECTOR_SPACE_BIG)]
+	[SerializeField] private Helper helper;
 
-	[SerializeField] private GameObject player;
-	[SerializeField] private Rigidbody2D playerRigidbody;
+	[SerializeField] private Player playerPrefab;
+	[SerializeField] private Transform bulletContainer;
 
-	[Space(Helper.INSPECTOR_SPACE)]
+	//============================================================
+	// Private Fields:
+	//============================================================
 
-	[SerializeField] private GameObject playerBullet;
-	[SerializeField] private GameObject bulletSpawnPoint;
-	[SerializeField] private GameObject bulletContainer;
-
+	private int playersRemainingLives;
 
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
 
-	public override void Update() {
-		base.Update();
-
-		// responsible for rotating the player
-		if (Input.GetKey(KeyCode.A)) {
-			player.transform.Rotate(ROTATION_DIRECTION, Time.deltaTime * ROTATION_SPEED);
-		}
-		else if (Input.GetKey(KeyCode.D)) {
-			player.transform.Rotate(-ROTATION_DIRECTION, Time.deltaTime * ROTATION_SPEED);
-		}
-
-		// allows the player to shoot their guns
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			Instantiate(playerBullet, bulletSpawnPoint.transform.position, player.transform.localRotation, bulletContainer.transform);
-		}
+	private void OnEnable() {
+		Player.PlayerDestroyedEvent += Player_PlayerDestroyed; 
 	}
 
-	private void FixedUpdate() {
+	private void Start() {
 
-		// responsible for moving the player forwards
-		if (Input.GetKey(KeyCode.W)) {
-			playerRigidbody.AddForce((player.transform.up * Time.deltaTime) * FORCE_STRENGTH, ForceMode2D.Impulse);
-		}
+		// set the players starting lives
+		playersRemainingLives = NUM_STARTING_LIVES;
+
+		// spawn the player into the world
+		SpawnPlayer();
 	}
+
+	private void OnDisable() {
+		Player.PlayerDestroyedEvent -= Player_PlayerDestroyed;
+	}
+
+	//============================================================
+	// Event Handlers:
+	//============================================================
+
+	private void Player_PlayerDestroyed() {
+
+		// remove a life from the players remaining lives
+		playersRemainingLives--;
+
+		// if the player has no lives remaining, signal that it is game over, then do nothing
+		if (playersRemainingLives == 0) {
+			if (GameOverEvent != null) {
+				GameOverEvent.Invoke();
+			}
+			return;
+		}
+
+		// respawn the player after the desired time with invulnerability
+		helper.InvokeActionDelayed(
+			() => { SpawnPlayer(PLAYER_INVULN_TIME); }
+			, PLAYER_RESPAWN_TIME);
+	}
+
+	//============================================================
+	// Private Methods:
+	//============================================================
+
+	private void SpawnPlayer(float invulnerabilityDuration = 0) {
+
+		// respawn the player in the centre of the play area
+		Player player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, transform);
+		player.name   = PLAYER_NAME;
+		player.Init(bulletContainer, invulnerabilityDuration);
+	}
+
 }

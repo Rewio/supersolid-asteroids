@@ -24,17 +24,17 @@ public class Asteroid : BoundaryController {
 	[SerializeField] private GameObject deathParticles;
 
 	//============================================================
+	// Private Fields:
+	//============================================================
+
+	private bool hasBeenInitialised;
+
+	//============================================================
 	// Public Properties:
 	//============================================================
 
 	public AsteroidController.AsteroidSizes AsteroidSize { get; private set; }
 	public Vector2 AsteroidVelocity { get; private set; }
-
-	//============================================================
-	// Private Fields:
-	//============================================================
-
-	private bool hasBeenInitialised;
 
 	//============================================================
 	// Unity Lifecycle:

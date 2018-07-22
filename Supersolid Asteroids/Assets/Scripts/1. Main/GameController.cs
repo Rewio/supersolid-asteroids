@@ -8,9 +8,15 @@ public class GameController : MonoBehaviour {
 
 	private const int STARTING_ASTEROIDS = 4;
 
+	private const float WAVE_END_DELAY = 3f;
+
 	//============================================================
 	// Inspector Variables:
 	//============================================================
+
+	[SerializeField] private Helper helper;
+
+	[Space(Helper.INSPECTOR_SPACE)]
 
 	[SerializeField] private AsteroidController asteroidController;
 	[SerializeField] private PlayerController playerController;
@@ -45,7 +51,11 @@ public class GameController : MonoBehaviour {
 
 	private void AsteroidController_AllAsteroidsDestroyed() {
 		wavesSurvived++;
-		StartContinueGame(wavesSurvived);
+
+		// after a short delay, begin the games next wave
+		helper.InvokeActionDelayed(
+			() => { StartContinueGame(wavesSurvived);}
+			, WAVE_END_DELAY);
 	}
 
 	//============================================================

@@ -51,6 +51,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4197357023210894}
+  - component: {fileID: 114300137748799862}
   - component: {fileID: 212006352247029206}
   - component: {fileID: 50047554927961270}
   - component: {fileID: 60454149018344416}
@@ -146,21 +147,41 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.0004303716, y: 0.4954568}
-      - {x: -0.3447037, y: -0.15486602}
-      - {x: -0.49145168, y: -0.4797585}
-      - {x: -0.47879022, y: -0.49567196}
-      - {x: -0.3613039, y: -0.27248695}
-      - {x: 0.35949025, y: -0.27173704}
-      - {x: 0.46594614, y: -0.49989247}
-      - {x: 0.4915589, y: -0.49145153}
-      - {x: 0.44513404, y: -0.39198947}
-      - {x: 0.007580109, y: 0.5165591}
+    - - {x: -0.0121716, y: 0.45555067}
+      - {x: -0.31739956, y: -0.15486602}
+      - {x: -0.45784646, y: -0.44195265}
+      - {x: -0.4409844, y: -0.45576578}
+      - {x: -0.33399975, y: -0.24728304}
+      - {x: 0.32798535, y: -0.24653314}
+      - {x: 0.4344412, y: -0.45158505}
+      - {x: 0.4474522, y: -0.44734472}
+      - {x: 0.43043184, y: -0.40249106}
+      - {x: -0.00082125515, y: 0.4661514}
     - - {x: -0.13766143, y: 0.17500001}
-      - {x: 0, y: 0.4166667}
-      - {x: -0.008333334, y: 0.4166667}
+      - {x: -0.006300982, y: 0.4271683}
+      - {x: -0.0020325119, y: 0.42716828}
       - {x: 0.116666675, y: 0.17922044}
-      - {x: 0.116666675, y: 0.15833335}
+      - {x: 0.12296766, y: 0.16463436}
+--- !u!114 &114300137748799862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646920489483414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f588def530a04047ba4ddb5b92e425d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  gameoCollider: {fileID: 60454149018344416}
+  gameoGameObject: {fileID: 1646920489483414}
+  playerRbody: {fileID: 50047554927961270}
+  playerCollider: {fileID: 60454149018344416}
+  playerRenderer: {fileID: 212006352247029206}
+  playerShipBurner: {fileID: 114819733189420376}
+  bullet: {fileID: 1073222450086664, guid: 9cc7eaf1d0c4e1647a0bf5cd7fe09a93, type: 2}
+  bulletSpawnPoint: {fileID: 1112572851092606}
 --- !u!114 &114819733189420376
 MonoBehaviour:
   m_ObjectHideFlags: 1

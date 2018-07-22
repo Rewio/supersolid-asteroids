@@ -15,13 +15,14 @@ public class PlayerShipBurner : MonoBehaviour {
 
 	private bool isPlayerMoving;
 	private bool isShipBurnerEnabled;
+
 	private IEnumerator burnerStatusToggleEnumerator;
 
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	private void Start() {
 		StartCoroutine(burnerStatusToggleEnumerator = BurnerStatusToggleCoroutine());
 	}
 
@@ -50,10 +51,13 @@ public class PlayerShipBurner : MonoBehaviour {
 	private IEnumerator BurnerStatusToggleCoroutine() {
 		while (burnerStatusToggleEnumerator != null) {
 
+			// if the player isn't moving, ensure the burner is disabled
 			if (!isPlayerMoving) {
 				shipBurnerRenderer.enabled = false;
 				yield return new WaitForSeconds(0.1f);
 			}
+
+			// otherwise, toggle the burners active state for the desired effect
 			else {
 				isShipBurnerEnabled        = !isShipBurnerEnabled;
 				shipBurnerRenderer.enabled = isShipBurnerEnabled;
