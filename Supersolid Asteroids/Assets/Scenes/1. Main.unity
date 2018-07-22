@@ -230,9 +230,6 @@ MonoBehaviour:
   - {fileID: 1628886814}
   - {fileID: 766474927}
   spawnedAsteroidsContainer: {fileID: 520021256}
-  spawnOffsetMultiplier: 1.5
-  asteroidDeathParticles: {fileID: 1259591222695266, guid: 6e6bb3fa98e344541b73d89e6c12b771,
-    type: 2}
 --- !u!1001 &141302747
 Prefab:
   m_ObjectHideFlags: 0
@@ -987,10 +984,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1646920489483414, guid: 5fa38ef1afcf5674b9746bcdab14f374, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fa38ef1afcf5674b9746bcdab14f374, type: 2}
   m_IsPrefabParent: 0
@@ -1117,6 +1110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694daff95fbfe584da30970b2990b74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidController: {fileID: 90722607}
+  playerController: {fileID: 0}
 --- !u!1 &2024597414
 GameObject:
   m_ObjectHideFlags: 0

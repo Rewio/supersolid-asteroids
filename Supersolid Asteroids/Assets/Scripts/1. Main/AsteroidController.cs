@@ -9,12 +9,17 @@ public class AsteroidController : MonoBehaviour {
 	// Constants:
 	//============================================================
 
-	private const int STARTING_ASTEROIDS    = 4;
 	private const int ASTEROID_SPLIT_AMOUNT = 2;
 
 	private const float ASTEROID_VELOCITY_MODIFIER  = 2f;
 	private const float ASTEROID_SPAWN_MODIFIER     = 0.5f;
-	private const float MAXIMUM_VELOCITY_ADJUSTMENT = 60f;
+	private const float MAXIMUM_VELOCITY_ADJUSTMENT = 50f;
+
+	//============================================================
+	// Events:
+	//============================================================
+
+	public static event Helper.EventHandler AllAsteroidsDestroyedEvent;
 
 	//============================================================
 	// Type Definitions:
@@ -38,7 +43,6 @@ public class AsteroidController : MonoBehaviour {
 
 	[SerializeField] private List<Transform> asteroidSpawnPositions;
 	[SerializeField] private Transform spawnedAsteroidsContainer;
-	[SerializeField] private float spawnOffsetMultiplier;
 
 	//============================================================
 	// Private Fields:
@@ -51,31 +55,27 @@ public class AsteroidController : MonoBehaviour {
 	//============================================================
 
 	private void OnEnable() {
-		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyedEvent;
-	}
-
-	private void Start() {
-
-		for (int i = 0; i < STARTING_ASTEROIDS; i++) {
-			Vector2 asteroidSpawnLocation = (Vector2) asteroidSpawnPositions[Random.Range(0, asteroidSpawnPositions.Count)].position + (Random.insideUnitCircle * spawnOffsetMultiplier);
-			Vector2 asteroidInitialVelocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-
-			SpawnNewAsteroid(AsteroidSizes.Large, asteroidSpawnLocation, asteroidInitialVelocity);
-		}
+		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
 	}
 
 	private void OnDisable() {
-		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyedEvent;
+		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
 	}
 
 	//============================================================
 	// Event Handlers:
 	//============================================================
 
-	private void Asteroid_AsteroidDestroyedEvent(Asteroid asteroid, Vector2 asteroidDeathPosition) {
+	private void Asteroid_AsteroidDestroyed(Asteroid asteroid, Vector2 asteroidDeathPosition) {
 
 		// stop tracking the asteroid as it no-longer exists.
 		trackedAsteroids.Remove(asteroid);
+
+		if (trackedAsteroids.Count == 0 && asteroid.AsteroidSize == AsteroidSizes.Small) {
+			if (AllAsteroidsDestroyedEvent != null) {
+				AllAsteroidsDestroyedEvent.Invoke();
+			}
+		}
 
 		// if the asteroid was small, we don't need to do anything atm
 		if (asteroid.AsteroidSize == AsteroidSizes.Small) return;
@@ -92,6 +92,22 @@ public class AsteroidController : MonoBehaviour {
 			Vector3    adjustedVelocity   = velocityAdjustment * asteroid.AsteroidVelocity;
 
 			SpawnNewAsteroid(newAsteroidSize, asteroidDeathPosition, adjustedVelocity * ASTEROID_VELOCITY_MODIFIER);
+		}
+	}
+
+	//============================================================
+	// Public Methods:
+	//============================================================
+
+	public void SpawnAsteroids(int numberOfAsteroids) {
+
+		for (int i = 0; i < numberOfAsteroids; i++) {
+
+			// generate a random starting position and starting velocity for the new asteroid
+			Vector2 spawnPosition = asteroidSpawnPositions[Random.Range(0, asteroidSpawnPositions.Count)].position;
+			Vector2 startingVelocity = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
+
+			SpawnNewAsteroid(AsteroidSizes.Large, spawnPosition, startingVelocity);
 		}
 	}
 
