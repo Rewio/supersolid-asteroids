@@ -53,12 +53,12 @@ public class GuiLivesView : GuiView {
 
 	private void Player_PlayerDestroyed() {
 
+		// if enough time hasn't passed yet, just back out
+		if (Time.time < nextUpdateAllowed) return;
+
 		// prevent further life reduction for the time being
 		// edge case, the player can collide with 2 asteroids at once, resulting in the graphic updating twice but only losing one life.
 		nextUpdateAllowed = Time.time + LIFE_REDUCTION_COOLDOWN;
-
-		// if enough time hasn't passed yet, just back out
-		if (Time.time < nextUpdateAllowed) return;
 
 		remainingLives = remainingLives - 1;
 		UpdateLivesView(remainingLives);
