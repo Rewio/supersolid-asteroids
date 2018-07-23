@@ -10,10 +10,10 @@ public class GuiController : MonoBehaviour {
 
 	[SerializeField] private GuiMenuView menuView;
 	[SerializeField] private GuiGameView gameView;
-	[SerializeField] private GuiView highScoreView;
+	[SerializeField] private GuiHighScoreView highScoreView;
 
 	//============================================================
-	// Unity Lifecycle:
+	// Public Methods:
 	//============================================================
 
 	public void HideAllViews() {
@@ -32,6 +32,7 @@ public class GuiController : MonoBehaviour {
 	}
 
 	public void ShowHideHighScoreView(bool enableElseDisable) {
-
+		highScoreView.EnableDisableViews(enableElseDisable);
 	}
+
 }

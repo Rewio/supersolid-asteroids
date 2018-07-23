@@ -60,7 +60,7 @@ public class GuiMenuView : GuiView {
 	}
 
 	//============================================================
-	// Private Methods:
+	// Event Handlers:
 	//============================================================
 
 	private static UnityAction ButtonsOnClick(Events eventToRaise) {

@@ -37,8 +37,10 @@ public class SceneController : MonoBehaviour {
 	//============================================================
 
 	private void OnEnable() {
-		GuiMenuView.PlayGameEvent   += GuiMenuView_PlayGame;
-		GuiMenuView.HighScoresEvent += GuiMenuView_HighScores;
+		GuiMenuView.PlayGameEvent     += GuiMenuView_PlayGame;
+		GuiMenuView.HighScoresEvent   += GuiMenuView_HighScores;
+		GuiGameView.GameFinishedEvent += GuiGameView_GameFinished;
+		GuiHighScoreView.NewGameEvent += GuiHighScoreView_NewGame;
 	}
 
 	private void Start() {
@@ -46,8 +48,10 @@ public class SceneController : MonoBehaviour {
 	}
 
 	private void OnDisable() {
-		GuiMenuView.PlayGameEvent   -= GuiMenuView_PlayGame;
-		GuiMenuView.HighScoresEvent -= GuiMenuView_HighScores;
+		GuiMenuView.PlayGameEvent     -= GuiMenuView_PlayGame;
+		GuiMenuView.HighScoresEvent   -= GuiMenuView_HighScores;
+		GuiGameView.GameFinishedEvent -= GuiGameView_GameFinished;
+		GuiHighScoreView.NewGameEvent -= GuiHighScoreView_NewGame;
 	}
 
 	//============================================================
@@ -74,7 +78,7 @@ public class SceneController : MonoBehaviour {
 				State_Game();
 				break;
 			case States.HighScores:
-				State_HighScores();
+				State_HighScoresEnter();
 				break;
 			case States.End:
 				State_End();
@@ -116,9 +120,18 @@ public class SceneController : MonoBehaviour {
 		gameController.StartContinueGame();
 	}
 
-	private void State_HighScores() {
+	private void State_HighScoresEnter() {
 
-		
+		// make sure the other views are hidden
+		guiController.ShowHideMenuView(false);
+		guiController.ShowHideGameView(false);
+
+		// present the high-scores view
+		guiController.ShowHideHighScoreView(true);
+	}
+
+	private void State_HighScoresExit() {
+		guiController.ShowHideHighScoreView(false);
 	}
 
 	private void State_End() {
@@ -137,6 +150,15 @@ public class SceneController : MonoBehaviour {
 	private void GuiMenuView_HighScores() {
 		State_MenuExit();
 		ChangeState(States.HighScores);
+	}
+
+	private void GuiGameView_GameFinished() {
+		ChangeState(States.HighScores);
+	}
+
+	private void GuiHighScoreView_NewGame() {
+		State_HighScoresExit();
+		ChangeState(States.Menu);
 	}
 
 }

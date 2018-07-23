@@ -26,14 +26,9 @@ public class FileUtil : MonoBehaviour {
 		applicationDataPath = Application.persistentDataPath;
 		storageFolderPath   = applicationDataPath + "/" + STORAGE_FOLDER;
 		scoresFilePath      = storageFolderPath + "/" + SCORES_FILENAME;
-	}
 
-	private void Update() {
-
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			Setup();
-		}
-
+		// run setup to make sure everything is as it should be
+		Setup();
 	}
 
 	//============================================================

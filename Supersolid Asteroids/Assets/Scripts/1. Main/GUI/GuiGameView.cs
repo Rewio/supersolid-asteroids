@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,12 @@ public class GuiGameView : GuiView {
 		EnterPlayerName,
 		End
 	}
+
+	//============================================================
+	// Events:
+	//============================================================
+
+	public static event Helper.EventHandler GameFinishedEvent;
 
 	//============================================================
 	// Inspector Variables:
@@ -181,6 +188,14 @@ public class GuiGameView : GuiView {
 		
 		// we no-longer care if the button has been clicked, remove the listener
 		playerNameAcceptButton.onClick.RemoveAllListeners();
+
+		// reset our state for the next run
+		currentState = States.PreStart;
+
+		// let those listening know that we want to view high scores
+		if (GameFinishedEvent != null) {
+			GameFinishedEvent.Invoke();
+		}
 
 		// we are proceeding into the next part of the game, these views are no-longer needed
 		HideAllViews();
