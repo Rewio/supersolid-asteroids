@@ -32,7 +32,10 @@ public class PlayerController : MonoBehaviour {
 	// Private Fields:
 	//============================================================
 
+	[SerializeField]
 	private int playersRemainingLives;
+
+	private bool gameInProgress;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -40,15 +43,6 @@ public class PlayerController : MonoBehaviour {
 
 	private void OnEnable() {
 		Player.PlayerDestroyedEvent += Player_PlayerDestroyed; 
-	}
-
-	private void Start() {
-
-		// set the players starting lives
-		playersRemainingLives = NUM_STARTING_LIVES;
-
-		// spawn the player into the world
-		SpawnPlayer();
 	}
 
 	private void OnDisable() {
@@ -76,6 +70,25 @@ public class PlayerController : MonoBehaviour {
 		helper.InvokeActionDelayed(
 			() => { SpawnPlayer(PLAYER_INVULN_TIME); }
 			, PLAYER_RESPAWN_TIME);
+	}
+
+	//============================================================
+	// Public Methods:
+	//============================================================
+
+	public void StartGame() {
+
+		// if the game is in progress, we dont want to any of this
+		if (gameInProgress) return;
+
+		// flag that we are current playing
+		gameInProgress = true;
+
+		// set the players starting lives
+		playersRemainingLives = NUM_STARTING_LIVES;
+
+		// bring the player into the game
+		SpawnPlayer();
 	}
 
 	//============================================================

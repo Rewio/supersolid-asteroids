@@ -1113,6 +1113,7 @@ MonoBehaviour:
   gameOverShowDuration: 4
   playerNameTextField: {fileID: 1118417966}
   playerNameAcceptButton: {fileID: 1085428201}
+  currentState: 0
 --- !u!114 &582435499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1369,6 +1370,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 114300137748799862, guid: 5fa38ef1afcf5674b9746bcdab14f374,
     type: 2}
   bulletContainer: {fileID: 1970559457}
+  playersRemainingLives: 0
 --- !u!114 &758049000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1548,6 +1550,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 901377175}
+  - component: {fileID: 901377176}
+  - component: {fileID: 901377177}
   m_Layer: 5
   m_Name: 3. High-Score View Controller
   m_TagString: Untagged
@@ -1573,6 +1577,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &901377176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 901377174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a03148d9e0cbba42841f87b21375f75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 901377177}
+--- !u!225 &901377177
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 901377174}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &920780909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,9 +1931,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e860e8bf1b86446b5c20e1fbd61679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuView: {fileID: 1878269529}
-  gameView: {fileID: 582435495}
-  highScoreView: {fileID: 901377174}
+  menuView: {fileID: 1878269532}
+  gameView: {fileID: 582435498}
+  highScoreView: {fileID: 901377176}
 --- !u!1 &1334846403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2494,6 +2521,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7a153353809104580729658505e3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guiController: {fileID: 1319976878}
+  playerController: {fileID: 758048999}
+  gameController: {fileID: 1971525348}
 --- !u!1 &1850640611
 GameObject:
   m_ObjectHideFlags: 0
@@ -2666,6 +2696,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1878269531}
+  asteroidsTitleView: {fileID: 1602283021}
+  playGameView: {fileID: 1886315116}
+  highScoresView: {fileID: 185823379}
+  playGameButton: {fileID: 1983274806}
+  highScoresButton: {fileID: 1850640613}
 --- !u!1 &1886315113
 GameObject:
   m_ObjectHideFlags: 0

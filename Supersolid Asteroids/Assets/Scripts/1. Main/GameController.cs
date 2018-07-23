@@ -38,14 +38,6 @@ public class GameController : MonoBehaviour {
 		PlayerController.NoLivesRemaining += PlayerController_NoLivesRemaining;
 	}
 
-	private void Update() {
-#if UNITY_EDITOR
-		if (Input.GetKeyDown(KeyCode.Return)) {
-			StartContinueGame();
-		}
-#endif
-	}
-
 	private void OnDisable() {
 		AsteroidController.AllAsteroidsDestroyedEvent -= AsteroidController_AllAsteroidsDestroyed;
 		PlayerController.NoLivesRemaining -= PlayerController_NoLivesRemaining;

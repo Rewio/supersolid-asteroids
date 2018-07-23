@@ -17,7 +17,7 @@ public class GuiGameView : GuiView {
 	// Type Definitions:
 	//============================================================
 
-	private enum States {
+	public enum States {
 		PreStart,
 		Start,
 		GameStart,
@@ -66,10 +66,6 @@ public class GuiGameView : GuiView {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void Start() {
-		ChangeToNextState();
-	}
-
 	private void OnDisable() {
 		GameController.GameOverEvent -= GameController_GameOver;
 	}
@@ -82,11 +78,7 @@ public class GuiGameView : GuiView {
 		ChangeToNextState();
 	}
 
-	//============================================================
-	// Public Methods:
-	//============================================================
-
-	public void PlayerNameButtonClicked() {
+	private void PlayerNameButtonClicked() {
 
 		// remove all leading and trailing spaces, they are unnecessary
 		playerNameText = playerNameText.Trim();
@@ -94,6 +86,14 @@ public class GuiGameView : GuiView {
 		// if they have yet to enter their name, do not proceed
 		if (playerNameText.Length == 0 || playerNameText.Equals("")) return;
 
+		ChangeToNextState();
+	}
+
+	//============================================================
+	// Public Methods:
+	//============================================================
+
+	public void StartGameView() {
 		ChangeToNextState();
 	}
 
