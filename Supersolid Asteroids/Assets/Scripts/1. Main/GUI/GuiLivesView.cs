@@ -10,6 +10,8 @@ public class GuiLivesView : GuiView {
 	private const float VIEW_RECT_HEIGHT = 100f;
 	private const int NUM_STARTING_LIVES = 3;
 
+	private const float LIFE_REDUCTION_COOLDOWN = 2f;
+
 	//============================================================
 	// Inspector Variables:
 	//============================================================
@@ -25,6 +27,8 @@ public class GuiLivesView : GuiView {
 
 	private Vector2 viewRectDimensions;
 	private int remainingLives;
+
+	private float nextUpdateAllowed;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -48,6 +52,14 @@ public class GuiLivesView : GuiView {
 	//============================================================
 
 	private void Player_PlayerDestroyed() {
+
+		// prevent further life reduction for the time being
+		// edge case, the player can collide with 2 asteroids at once, resulting in the graphic updating twice but only losing one life.
+		nextUpdateAllowed = Time.time + LIFE_REDUCTION_COOLDOWN;
+
+		// if enough time hasn't passed yet, just back out
+		if (Time.time < nextUpdateAllowed) return;
+
 		remainingLives = remainingLives - 1;
 		UpdateLivesView(remainingLives);
 	}

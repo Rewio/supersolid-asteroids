@@ -19,8 +19,6 @@ public class GuiView : MonoBehaviour {
 
 		// hooks up the inspector variable with the attached component in the editor, and sets up its default values
 		canvasGroup = GetComponent<CanvasGroup>();
-		canvasGroup.interactable   = false;
-		canvasGroup.blocksRaycasts = false;
 	}
 
 	//============================================================
