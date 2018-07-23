@@ -1,65 +1,64 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
-public class GameController : MonoBehaviour {
+public class GuiLivesView : GuiView {
 
 	//============================================================
 	// Constants:
 	//============================================================
 
-	private const int STARTING_ASTEROIDS = 4;
-
-	private const float WAVE_END_DELAY = 3f;
+	private const float VIEW_RECT_HEIGHT = 100f;
+	private const int NUM_STARTING_LIVES = 3;
 
 	//============================================================
 	// Inspector Variables:
 	//============================================================
 
-	[SerializeField] private Helper helper;
-	[SerializeField] private AsteroidController asteroidController;
+	[Space(Helper.INSPECTOR_SPACE_BIG)]
+
+	[SerializeField] private Image livesPanel;
+	[SerializeField] private float widthPerLife;
 
 	//============================================================
 	// Private Fields:
 	//============================================================
 
-	private int wavesSurvived;
+	private Vector2 viewRectDimensions;
+	private int remainingLives;
 
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
 
 	private void OnEnable() {
-		AsteroidController.AllAsteroidsDestroyedEvent += AsteroidController_AllAsteroidsDestroyed;
+		Player.PlayerDestroyedEvent += Player_PlayerDestroyed;
 	}
 
-	private void Update() {
-		if (Input.GetKeyDown(KeyCode.Return)) {
-			StartContinueGame();
-		}
+	private void Start() {
+		remainingLives = NUM_STARTING_LIVES;
+		viewRectDimensions = new Vector2(widthPerLife * NUM_STARTING_LIVES, VIEW_RECT_HEIGHT);
 	}
 
 	private void OnDisable() {
-		AsteroidController.AllAsteroidsDestroyedEvent -= AsteroidController_AllAsteroidsDestroyed;
+		Player.PlayerDestroyedEvent -= Player_PlayerDestroyed;
 	}
 
 	//============================================================
 	// Event Handlers:
 	//============================================================
 
-	private void AsteroidController_AllAsteroidsDestroyed() {
-		wavesSurvived++;
-
-		// after a short delay, begin the games next wave
-		helper.InvokeActionDelayed(
-			() => { StartContinueGame(wavesSurvived);}
-			, WAVE_END_DELAY);
+	private void Player_PlayerDestroyed() {
+		remainingLives--;
+		UpdateLivesView(remainingLives);
 	}
 
 	//============================================================
-	// Public Methods:
+	// Private Methods:
 	//============================================================
 
-	public void StartContinueGame(int additionalAsteroids = 0) {
-		asteroidController.SpawnAsteroids(STARTING_ASTEROIDS + additionalAsteroids);
+	private void UpdateLivesView(int remainingLives) {
+		viewRectDimensions.x = widthPerLife * remainingLives;
+		livesPanel.rectTransform.sizeDelta = viewRectDimensions;
 	}
 
 }

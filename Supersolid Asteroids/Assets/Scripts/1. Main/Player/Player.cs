@@ -59,8 +59,8 @@ public class Player : BoundaryController {
 		// if we aren't initialised, we don't have a reference to the bullet container, so we can't shoot until we are
 		if (!isInitialised) return;
 
-		// allows the player to shoot their guns
-		if (Input.GetKeyDown(KeyCode.Space)) {
+		// allows the player to shoot their guns by pressing space or left click
+		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) {
 			Instantiate(bullet, bulletSpawnPoint.transform.position, transform.localRotation, bulletContainer.transform);
 		}
 	}

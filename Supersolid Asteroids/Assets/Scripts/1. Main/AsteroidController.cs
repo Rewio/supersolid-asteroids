@@ -69,13 +69,15 @@ public class AsteroidController : MonoBehaviour {
 
 	private void Asteroid_AsteroidDestroyed(Asteroid asteroid, Vector2 asteroidDeathPosition) {
 
-		// stop tracking the asteroid as it no-longer exists.
+		// stop tracking the asteroid as it no-longer exists
 		trackedAsteroids.Remove(asteroid);
 
+		// if the last asteroid was destroyed, send an alert so the next wave can begin
 		if (trackedAsteroids.Count == 0 && asteroid.AsteroidSize == AsteroidSizes.Small) {
 			if (AllAsteroidsDestroyedEvent != null) {
 				AllAsteroidsDestroyedEvent.Invoke();
 			}
+			return;
 		}
 
 		// if the asteroid was small, we don't need to do anything atm

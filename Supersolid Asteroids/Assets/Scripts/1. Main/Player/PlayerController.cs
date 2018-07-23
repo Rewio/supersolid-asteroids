@@ -8,8 +8,6 @@ public class PlayerController : MonoBehaviour {
 
 	private const int NUM_STARTING_LIVES = 3;
 
-	private const string PLAYER_NAME = "Player";
-
 	private const float PLAYER_RESPAWN_TIME = 2f;
 	private const float PLAYER_INVULN_TIME  = 2f;
 
@@ -88,7 +86,6 @@ public class PlayerController : MonoBehaviour {
 
 		// respawn the player in the centre of the play area
 		Player player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, transform);
-		player.name   = PLAYER_NAME;
 		player.Init(bulletContainer, invulnerabilityDuration);
 	}
 
