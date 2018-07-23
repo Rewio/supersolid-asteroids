@@ -73,8 +73,14 @@ public class GuiGameView : GuiView {
 	// Unity Lifecycle:
 	//============================================================
 
+	private void OnEnable() {
+		GameController.NewGameEvent += GameController_NewGame;
+
+	}
+
 	private void OnDisable() {
 		GameController.GameOverEvent -= GameController_GameOver;
+		GameController.NewGameEvent  -= GameController_NewGame;
 	}
 
 	//============================================================
@@ -94,6 +100,13 @@ public class GuiGameView : GuiView {
 		if (playerNameText.Length == 0 || playerNameText.Equals("")) return;
 
 		ChangeToNextState();
+	}
+
+	private void GameController_NewGame() {
+
+		// reset the players name
+		playerNameText = "";
+		playerNameTextField.text = playerNameText;
 	}
 
 	//============================================================

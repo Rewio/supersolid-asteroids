@@ -116,8 +116,7 @@ public class SceneController : MonoBehaviour {
 		guiController.ShowHideGameView(true);
 		
 		// start the game for the player and game controllers
-		playerController.StartGame();
-		gameController.StartContinueGame();
+		gameController.StartGame();
 	}
 
 	private void State_HighScoresEnter() {

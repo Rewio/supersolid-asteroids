@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 	// Events:
 	//============================================================
 
+	public static event Helper.EventHandler NewGameEvent;
 	public static event Helper.EventHandler GameOverEvent;
 
 	//============================================================
@@ -48,7 +49,8 @@ public class GameController : MonoBehaviour {
 	//============================================================
 
 	private void AsteroidController_AllAsteroidsDestroyed() {
-		wavesSurvived++;
+
+		wavesSurvived = wavesSurvived + 1;
 
 		// after a short delay, begin the games next wave
 		helper.InvokeActionDelayed(
@@ -68,7 +70,25 @@ public class GameController : MonoBehaviour {
 	// Public Methods:
 	//============================================================
 
-	public void StartContinueGame(int additionalAsteroids = 0) {
+	public void StartGame() {
+
+		// reset our waves survived tracker
+		wavesSurvived = 0;
+
+		// let others know that this is a new game so they too can reset
+		if (NewGameEvent != null) {
+			NewGameEvent.Invoke();
+		}
+
+		// spawn the first bunch of asteroids
+		StartContinueGame();
+	}
+
+	//============================================================
+	// Private Methods:
+	//============================================================
+
+	private void StartContinueGame(int additionalAsteroids = 0) {
 		asteroidController.SpawnAsteroids(STARTING_ASTEROIDS + additionalAsteroids);
 	}
 

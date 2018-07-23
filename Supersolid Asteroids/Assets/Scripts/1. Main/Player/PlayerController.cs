@@ -43,10 +43,12 @@ public class PlayerController : MonoBehaviour {
 
 	private void OnEnable() {
 		Player.PlayerDestroyedEvent += Player_PlayerDestroyed; 
+		GameController.NewGameEvent += GameController_NewGame;
 	}
 
 	private void OnDisable() {
 		Player.PlayerDestroyedEvent -= Player_PlayerDestroyed;
+		GameController.NewGameEvent -= GameController_NewGame;
 	}
 
 	//============================================================
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 		playersRemainingLives = playersRemainingLives - 1;
 
 		// if the player has no lives remaining, signal that it is game over, then do nothing
-		if (playersRemainingLives == 0) {
+		if (playersRemainingLives <= 0) {
 			if (NoLivesRemaining != null) {
 				NoLivesRemaining.Invoke();
 			}
@@ -71,23 +73,13 @@ public class PlayerController : MonoBehaviour {
 			() => { SpawnPlayer(PLAYER_INVULN_TIME); }
 			, PLAYER_RESPAWN_TIME);
 	}
+	
+	private void GameController_NewGame() {
 
-	//============================================================
-	// Public Methods:
-	//============================================================
-
-	public void StartGame() {
-
-		// if the game is in progress, we dont want to any of this
-		if (gameInProgress) return;
-
-		// flag that we are current playing
-		gameInProgress = true;
-
-		// set the players starting lives
+		// reset the players remaining lives
 		playersRemainingLives = NUM_STARTING_LIVES;
 
-		// bring the player into the game
+		// spawn them into the game
 		SpawnPlayer();
 	}
 

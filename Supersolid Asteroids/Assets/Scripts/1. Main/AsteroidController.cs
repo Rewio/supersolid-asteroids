@@ -57,10 +57,12 @@ public class AsteroidController : MonoBehaviour {
 
 	private void OnEnable() {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
+		GameController.NewGameEvent     += GameController_NewGame;
 	}
 
 	private void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
+		GameController.NewGameEvent     -= GameController_NewGame;
 	}
 
 	//============================================================
@@ -96,6 +98,20 @@ public class AsteroidController : MonoBehaviour {
 
 			SpawnNewAsteroid(newAsteroidSize, asteroidDeathPosition, adjustedVelocity * ASTEROID_VELOCITY_MODIFIER);
 		}
+	}
+
+	private void GameController_NewGame() {
+
+		// create a local copy of the old asteroids to prevent enumeration errors
+		List<Asteroid> oldAsteroids = trackedAsteroids;
+
+		// iterate over each of the old asteroids destroying them
+		foreach (Asteroid asteroid in oldAsteroids) {
+			Destroy(asteroid.gameObject);
+		}
+
+		// clear all of the tracked asteroids, we have new ones to track
+		trackedAsteroids.Clear();
 	}
 
 	//============================================================

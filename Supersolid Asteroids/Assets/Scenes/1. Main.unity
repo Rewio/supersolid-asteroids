@@ -1723,6 +1723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 901377177}
   continueView: {fileID: 356060754}
+  newGameButton: {fileID: 994277705}
 --- !u!225 &901377177
 CanvasGroup:
   m_ObjectHideFlags: 0
