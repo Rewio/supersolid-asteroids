@@ -48,7 +48,7 @@ public class GuiLivesView : GuiView {
 	//============================================================
 
 	private void Player_PlayerDestroyed() {
-		remainingLives--;
+		remainingLives = remainingLives - 1;
 		UpdateLivesView(remainingLives);
 	}
 
@@ -56,8 +56,8 @@ public class GuiLivesView : GuiView {
 	// Private Methods:
 	//============================================================
 
-	private void UpdateLivesView(int remainingLives) {
-		viewRectDimensions.x = widthPerLife * remainingLives;
+	private void UpdateLivesView(int livesLeft) {
+		viewRectDimensions.x = widthPerLife * livesLeft;
 		livesPanel.rectTransform.sizeDelta = viewRectDimensions;
 	}
 

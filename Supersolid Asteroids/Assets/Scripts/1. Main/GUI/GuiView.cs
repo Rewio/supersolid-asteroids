@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public abstract class GuiView : MonoBehaviour {
+[RequireComponent(typeof(CanvasGroup))]
+public class GuiView : MonoBehaviour {
 
 	//============================================================
 	// Inspector Variables:
@@ -11,14 +12,26 @@ public abstract class GuiView : MonoBehaviour {
 	[SerializeField] private CanvasGroup canvasGroup;
 
 	//============================================================
+	// Unity Lifecycle:
+	//============================================================
+
+	private void OnValidate() {
+
+		// hooks up the inspector variable with the attached component in the editor, and sets up its default values
+		canvasGroup = GetComponent<CanvasGroup>();
+		canvasGroup.interactable   = false;
+		canvasGroup.blocksRaycasts = false;
+	}
+
+	//============================================================
 	// Public Methods:
 	//============================================================
 
-	public virtual void HideView() {
+	public void HideView() {
 		canvasGroup.alpha = 0;
 	}
 
-	public virtual void ShowView() {
+	public void ShowView() {
 		canvasGroup.alpha = 1;
 	}
 

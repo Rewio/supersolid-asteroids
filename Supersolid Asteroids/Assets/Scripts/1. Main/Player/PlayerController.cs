@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
 	// Events:
 	//============================================================
 
-	public static event Helper.EventHandler GameOverEvent;
+	public static event Helper.EventHandler NoLivesRemaining;
 
 	//============================================================
 	// Inspector Variables:
@@ -62,12 +62,12 @@ public class PlayerController : MonoBehaviour {
 	private void Player_PlayerDestroyed() {
 
 		// remove a life from the players remaining lives
-		playersRemainingLives--;
+		playersRemainingLives = playersRemainingLives - 1;
 
 		// if the player has no lives remaining, signal that it is game over, then do nothing
 		if (playersRemainingLives == 0) {
-			if (GameOverEvent != null) {
-				GameOverEvent.Invoke();
+			if (NoLivesRemaining != null) {
+				NoLivesRemaining.Invoke();
 			}
 			return;
 		}

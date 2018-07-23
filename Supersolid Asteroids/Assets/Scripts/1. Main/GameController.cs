@@ -11,6 +11,12 @@ public class GameController : MonoBehaviour {
 	private const float WAVE_END_DELAY = 3f;
 
 	//============================================================
+	// Events:
+	//============================================================
+
+	public static event Helper.EventHandler GameOverEvent;
+
+	//============================================================
 	// Inspector Variables:
 	//============================================================
 
@@ -29,16 +35,20 @@ public class GameController : MonoBehaviour {
 
 	private void OnEnable() {
 		AsteroidController.AllAsteroidsDestroyedEvent += AsteroidController_AllAsteroidsDestroyed;
+		PlayerController.NoLivesRemaining += PlayerController_NoLivesRemaining;
 	}
 
 	private void Update() {
+#if UNITY_EDITOR
 		if (Input.GetKeyDown(KeyCode.Return)) {
 			StartContinueGame();
 		}
+#endif
 	}
 
 	private void OnDisable() {
 		AsteroidController.AllAsteroidsDestroyedEvent -= AsteroidController_AllAsteroidsDestroyed;
+		PlayerController.NoLivesRemaining -= PlayerController_NoLivesRemaining;
 	}
 
 	//============================================================
@@ -52,6 +62,14 @@ public class GameController : MonoBehaviour {
 		helper.InvokeActionDelayed(
 			() => { StartContinueGame(wavesSurvived);}
 			, WAVE_END_DELAY);
+	}
+
+	private void PlayerController_NoLivesRemaining() {
+
+		// tell the world that the game has ended
+		if (GameOverEvent != null) {
+			GameOverEvent.Invoke();
+		}
 	}
 
 	//============================================================
