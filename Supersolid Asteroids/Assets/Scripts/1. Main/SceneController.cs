@@ -44,6 +44,9 @@ public class SceneController : MonoBehaviour {
 
 	private void Start() {
 
+		// setup the file directory and save file
+		FileUtil.Setup();
+
 		// load the scoreboard from disk
 		PlayerData.scoreboard = FileUtil.LoadScoreboard();
 
