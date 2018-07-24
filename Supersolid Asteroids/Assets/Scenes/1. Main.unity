@@ -216,8 +216,14 @@ MonoBehaviour:
   - {fileID: 114631071560827514, guid: 8f5e2c3632ec9ad43a179acea231ec03, type: 2}
   mediumAsteroids:
   - {fileID: 114186320929427870, guid: 69f25f1a477675847a9e9e1e2a2115fd, type: 2}
+  - {fileID: 114499505372929498, guid: ba0680114e65c754d906b5d428ed93f5, type: 2}
+  - {fileID: 114110966039385790, guid: 35e0180a419eac84cbd0f51b04619a36, type: 2}
+  - {fileID: 114398173251160230, guid: cd9884538e1b2004da00f755cd54788f, type: 2}
   smallAsteroids:
   - {fileID: 114265371302361982, guid: 6f1d10418e424004ea6c02c038ec1a19, type: 2}
+  - {fileID: 114582023744011652, guid: bed9cd634d374f140aeb5abcf311318f, type: 2}
+  - {fileID: 114382848865074440, guid: 53c99a322a41c7e4a97935aedc37c0fa, type: 2}
+  - {fileID: 114718071746392340, guid: 0db5b7b4b410da140a4b4d27882fe908, type: 2}
   asteroidSpawnPositions:
   - {fileID: 421822253}
   - {fileID: 2035131709}
