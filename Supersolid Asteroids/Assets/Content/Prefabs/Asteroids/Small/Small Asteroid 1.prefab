@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ca487b6e0fb274d8f0a86e1fd9f57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectCollider: {fileID: 0}
+  objectCollider: {fileID: 60133493654630688}
   objectTransform: {fileID: 4031112240321942}
   objectHeight: 0.5
   objectWidth: 0.5
