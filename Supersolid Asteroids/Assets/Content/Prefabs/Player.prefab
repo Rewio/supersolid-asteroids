@@ -173,13 +173,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f588def530a04047ba4ddb5b92e425d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  gameoCollider: {fileID: 60454149018344416}
-  gameoGameObject: {fileID: 1646920489483414}
+  objectCollider: {fileID: 60454149018344416}
+  objectTransform: {fileID: 4197357023210894}
+  objectHeight: 0.9
+  objectWidth: 0.9
   playerRbody: {fileID: 50047554927961270}
   playerCollider: {fileID: 60454149018344416}
   playerRenderer: {fileID: 212006352247029206}
-  playerShipBurner: {fileID: 114819733189420376}
   bullet: {fileID: 1073222450086664, guid: 9cc7eaf1d0c4e1647a0bf5cd7fe09a93, type: 2}
   bulletSpawnPoint: {fileID: 1112572851092606}
 --- !u!114 &114819733189420376

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : BoundaryController {
 
 	//============================================================
 	// Inspector Variables:
 	//============================================================
+
+	[Space(Helper.INSPECTOR_SPACE_BIG)]
 
 	[SerializeField] private float lifetime;
 	[SerializeField] private float velocityModifier;
@@ -21,7 +23,8 @@ public class Bullet : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void Start() {
+	public override void Start() {
+		base.Start();
 
 		// record the times for when the object was spawned and when it is due to be destroyed
 		spawnTime = Time.time;
@@ -31,7 +34,8 @@ public class Bullet : MonoBehaviour {
 		rbody.velocity = (transform.up * velocityModifier) * Time.fixedDeltaTime;
 	}
 
-	private void Update() {
+	public override void Update() {
+		base.Update();
 
 		// if our lifetime has elapsed, destroy ourself
 		if (Time.time > deathTime) {

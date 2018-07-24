@@ -79,7 +79,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
+    oldSize: {x: 2.1333334, y: 2.1333334}
     newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -170,9 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ca487b6e0fb274d8f0a86e1fd9f57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  gameoCollider: {fileID: 60394083774541506}
-  gameoGameObject: {fileID: 1669237610223744}
+  objectCollider: {fileID: 60394083774541506}
+  objectTransform: {fileID: 4219322617094162}
+  objectHeight: 2.1
+  objectWidth: 2.1
   rbody: {fileID: 50296606911602380}
   deathParticles: {fileID: 1259591222695266, guid: 6e6bb3fa98e344541b73d89e6c12b771,
     type: 2}

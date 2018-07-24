@@ -1,13 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class BoundaryController : MonoBehaviour {
-
-	//============================================================
-	// Constants:
-	//============================================================
-
-	private const float X_BOUNDARY = 8.89f;
-	private const float Y_BOUNDARY = 5f;
+public class BoundaryController : MonoBehaviour {
 
 	//============================================================
 	// Inspector Variables:
@@ -15,59 +8,58 @@ public abstract class BoundaryController : MonoBehaviour {
 
 	[Header("Base")]
 
-	[SerializeField] private Camera mainCamera;
-	[SerializeField] private Collider2D gameoCollider;
-	[SerializeField] private GameObject gameoGameObject;
+	[SerializeField] private Collider2D objectCollider;
+	[SerializeField] private Transform objectTransform;
+
+	[SerializeField] private float objectHeight;
+	[SerializeField] private float objectWidth;
 
 	//============================================================
 	// Private Fields:
 	//============================================================
 
+	private Camera mainCamera;
+
+	private float cameraHeight;
+	private float cameraWidth;
+
 	private Plane[] planes;
+
+	private Vector2 currentPosition;
 
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
 
 	public virtual void Start() {
+		mainCamera = Camera.main;
 
-		// TODO: fix this 
-		if (mainCamera == null) {
-			mainCamera = Camera.main;
-		}
-		
+		cameraHeight = mainCamera.orthographicSize;
+		cameraWidth  = cameraHeight * Screen.width / Screen.height;
+
 		planes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
 	}
 
-//	public void Start() {
-//
-//		float vertical   = mainCamera.orthographicSize;
-//		float horizontal = vertical * Screen.width / Screen.height;
-//
-//		print(vertical + " - " + horizontal);
-//
-//	}
-
 	public virtual void Update() {
 
-		// if we are no-longer visible by the main camera...
-		if (!GeometryUtility.TestPlanesAABB(planes, gameoCollider.bounds)) {
+		// check if the object is no-longer visible by the camera
+		if (!GeometryUtility.TestPlanesAABB(planes, objectCollider.bounds)) {
 
-			// grab our current position so we can figure from which direction we exited the screen.
-			Vector2 currentPosition = gameoGameObject.transform.position;
+			// grab the current position to check which side of the screen we left on
+			currentPosition = objectTransform.position;
 
-			// if we left the screen horizontally, add or subtract twice the camera width to place us back in view.
-			if (Mathf.Abs(currentPosition.x) > X_BOUNDARY) {
-				currentPosition.x += (currentPosition.x > 0) ? -X_BOUNDARY * 2 : X_BOUNDARY * 2;
+			// if our x position is greater than the camera width, it was horizontally
+			if (Mathf.Abs(currentPosition.x) > cameraWidth) {
+				currentPosition.x += (currentPosition.x > 0) ? (-cameraWidth * 2) - objectWidth : (cameraWidth * 2) + objectWidth;
 			}
 
-			// the same as above, however this is if we have left the screen vertically.
-			else if (Mathf.Abs(currentPosition.y) > Y_BOUNDARY) {
-				currentPosition.y += (currentPosition.y > 0) ? -Y_BOUNDARY * 2 : Y_BOUNDARY * 2;
+			// if it was the y position, it was vertically
+			else if (Mathf.Abs(currentPosition.y) > cameraHeight) {
+				currentPosition.y += (currentPosition.y > 0) ? (-cameraHeight * 2) - objectHeight : (cameraHeight * 2) + objectHeight;
 			}
 
-			// finally update the game object with the new position.
-			gameoGameObject.transform.position = currentPosition;
+			// overwrite our objects position with it's new position
+			objectTransform.position = currentPosition;
 		}
 	}
 

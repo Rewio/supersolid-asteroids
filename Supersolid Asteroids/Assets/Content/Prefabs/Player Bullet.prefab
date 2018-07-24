@@ -99,7 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c81102eb7d94dc4aa0e5b68f63df925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 1.5
+  objectCollider: {fileID: 61191097580873100}
+  objectTransform: {fileID: 4194175663012054}
+  objectHeight: 0.08
+  objectWidth: 0.08
+  lifetime: 1
   velocityModifier: 750
   rbody: {fileID: 50393560817142572}
 --- !u!212 &212591429356407306

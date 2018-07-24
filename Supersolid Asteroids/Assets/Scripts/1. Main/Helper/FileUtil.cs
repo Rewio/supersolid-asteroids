@@ -63,9 +63,6 @@ public static class FileUtil {
 			fileStream.Dispose();
 			fileStream = null;
 		}
-
-		// flag that everything is setup
-		isSetup = true;
 	}
 
 }
