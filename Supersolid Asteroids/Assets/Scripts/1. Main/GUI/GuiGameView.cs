@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -198,6 +197,9 @@ public class GuiGameView : GuiView {
 	}
 
 	private void State_End() {
+
+		// update the player data object with the players name
+		PlayerData.PlayerName = playerNameText;
 		
 		// we no-longer care if the button has been clicked, remove the listener
 		playerNameAcceptButton.onClick.RemoveAllListeners();

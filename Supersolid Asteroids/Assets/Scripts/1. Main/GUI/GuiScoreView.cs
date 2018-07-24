@@ -32,6 +32,7 @@ public class GuiScoreView : GuiView {
 	private void OnEnable() {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
 		GameController.NewGameEvent     += GameController_NewGame;
+		GameController.GameOverEvent    += GameController_GameOver;
 	}
 
 	private void Start() {
@@ -41,6 +42,7 @@ public class GuiScoreView : GuiView {
 	private void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
 		GameController.NewGameEvent     -= GameController_NewGame;
+		GameController.GameOverEvent    += GameController_GameOver;
 	}
 
 	//============================================================
@@ -68,6 +70,12 @@ public class GuiScoreView : GuiView {
 		// reset our score value, and the ui's score value
 		currentScore = 0;
 		scoreText.text = currentScore.ToString();
+	}
+
+	private void GameController_GameOver() {
+
+		// if the game ends, update the player data object with the players score
+		PlayerData.PlayerScore = currentScore;
 	}
 
 	//============================================================

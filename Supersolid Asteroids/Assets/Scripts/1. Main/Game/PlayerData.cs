@@ -1,9 +1,12 @@
-﻿using UnityEngine;
-
-public class PlayerData : MonoBehaviour {
+﻿public static class PlayerData {
 
 	//============================================================
-	// Heading:
+	// Public Fields:
 	//============================================================
+
+	public static string PlayerName;
+	public static int PlayerScore;
+
+	public static Scoreboard scoreboard;
 
 }

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-public class FileUtil : MonoBehaviour {
+public static class FileUtil {
 
 	//============================================================
 	// Constants:
@@ -14,40 +14,46 @@ public class FileUtil : MonoBehaviour {
 	// Private Fields:
 	//============================================================
 
-	private string applicationDataPath = "";
-	private string storageFolderPath   = "";
-	private string scoresFilePath      = "";
+	private static bool isSetup;
 
-	//============================================================
-	// Unity Lifecycle:
-	//============================================================
+	private static string applicationDataPath = "";
+	private static string storageFolderPath   = "";
+	private static string scoresFilePath      = "";
 
-	private void Start() {
-		applicationDataPath = Application.persistentDataPath;
-		storageFolderPath   = applicationDataPath + "/" + STORAGE_FOLDER;
-		scoresFilePath      = storageFolderPath + "/" + SCORES_FILENAME;
-
-		// run setup to make sure everything is as it should be
-		Setup();
-	}
 
 	//============================================================
 	// Public Methods:
 	//============================================================
 
-	public void WriteToFile(string contentsToWrite) {
-		File.WriteAllText(scoresFilePath, contentsToWrite);
+	public static void SaveScoreboard(Scoreboard scoreboard) {
+
+		// make sure everything is setup before we do anything more.
+		if (!isSetup) Setup();
+
+		// turn the scoreboard into json, then save it to disk
+		string scoreboardJson = JsonUtility.ToJson(scoreboard);
+		File.WriteAllText(scoresFilePath, scoreboardJson);
 	}
 
-	public string ReadFromFile() {
-		return File.ReadAllText(scoresFilePath);
+	public static Scoreboard LoadScoreboard() {
+
+		// make sure everything is setup before we do anything more.
+		if (!isSetup) Setup();
+
+		// read our scoreboard from disk in json format, then return it as a scoreboard object
+		string savedScoreboard = File.ReadAllText(scoresFilePath);
+		return JsonUtility.FromJson<Scoreboard>(savedScoreboard);
 	}
 
 	//============================================================
 	// Private Methods:
 	//============================================================
 
-	private void Setup() {
+	private static void Setup() {
+
+		applicationDataPath = Application.persistentDataPath;
+		storageFolderPath   = applicationDataPath + "/" + STORAGE_FOLDER;
+		scoresFilePath      = storageFolderPath + "/" + SCORES_FILENAME;
 
 		// make sure the application data path is created
 		if (!Directory.Exists(applicationDataPath)) {

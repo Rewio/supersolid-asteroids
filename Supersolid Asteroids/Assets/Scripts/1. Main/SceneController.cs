@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SceneController : MonoBehaviour {
 
@@ -44,6 +43,16 @@ public class SceneController : MonoBehaviour {
 	}
 
 	private void Start() {
+
+		// load the scoreboard from disk
+		PlayerData.scoreboard = FileUtil.LoadScoreboard();
+
+		// if the scoreboard is null, there is no save data, so create a scoreboard and save it
+		if (PlayerData.scoreboard == null) {
+			PlayerData.scoreboard = new Scoreboard();
+			FileUtil.SaveScoreboard(PlayerData.scoreboard);
+		}
+
 		ChangeToNextState();
 	}
 
@@ -152,6 +161,12 @@ public class SceneController : MonoBehaviour {
 	}
 
 	private void GuiGameView_GameFinished() {
+
+		// as the game has finished, record the players score, add it to the scoreboard, then save that scoreboard to disk
+		Score newScore = new Score(PlayerData.PlayerName, PlayerData.PlayerScore);
+		PlayerData.scoreboard.AddNewScore(newScore);
+		FileUtil.SaveScoreboard(PlayerData.scoreboard);
+
 		ChangeState(States.HighScores);
 	}
 

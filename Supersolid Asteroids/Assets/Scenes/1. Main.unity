@@ -1502,7 +1502,6 @@ MonoBehaviour:
   playerPrefab: {fileID: 114300137748799862, guid: 5fa38ef1afcf5674b9746bcdab14f374,
     type: 2}
   bulletContainer: {fileID: 1970559457}
-  playersRemainingLives: 0
 --- !u!114 &758049000
 MonoBehaviour:
   m_ObjectHideFlags: 0

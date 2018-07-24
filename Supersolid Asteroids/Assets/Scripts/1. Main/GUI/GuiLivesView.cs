@@ -10,8 +10,6 @@ public class GuiLivesView : GuiView {
 	private const float VIEW_RECT_HEIGHT = 100f;
 	private const int NUM_STARTING_LIVES = 3;
 
-	private const float LIFE_REDUCTION_COOLDOWN = 2f;
-
 	//============================================================
 	// Inspector Variables:
 	//============================================================

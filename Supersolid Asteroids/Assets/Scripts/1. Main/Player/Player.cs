@@ -26,7 +26,6 @@ public class Player : BoundaryController {
 	[SerializeField] private Rigidbody2D playerRbody;
 	[SerializeField] private Collider2D playerCollider;
 	[SerializeField] private SpriteRenderer playerRenderer;
-	[SerializeField] private PlayerShipBurner playerShipBurner;
 
 	[Space(Helper.INSPECTOR_SPACE)]
 
@@ -73,6 +72,7 @@ public class Player : BoundaryController {
 		}
 	}
 
+	// ReSharper disable once UnusedParameter.Local
 	private void OnCollisionEnter2D(Collision2D col) {
 
 		// alert those that are listening that we have been destroyed

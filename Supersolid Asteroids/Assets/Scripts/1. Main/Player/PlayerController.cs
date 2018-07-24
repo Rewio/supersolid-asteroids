@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour {
 
 	private void Player_PlayerDestroyed() {
 
-		// slight edge case, where player can collide with two asteroids simultaneously
+		// slight edge case where player can collide with two asteroids simultaneously
 		// this prevents the loss of two lives in that event
 		timeLastLifeRemoved = Time.time + LIFE_DEDUCTION_COOLDOWN;
 		if (timeLastLifeRemoved > Time.time) {
