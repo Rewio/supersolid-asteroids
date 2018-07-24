@@ -14,21 +14,17 @@ public static class FileUtil {
 	// Private Fields:
 	//============================================================
 
-	private static bool isSetup;
-
 	private static string applicationDataPath = "";
 	private static string storageFolderPath   = "";
 	private static string scoresFilePath      = "";
 
+	private static FileStream fileStream;
 
 	//============================================================
 	// Public Methods:
 	//============================================================
 
 	public static void SaveScoreboard(Scoreboard scoreboard) {
-
-		// make sure everything is setup before we do anything more.
-		if (!isSetup) Setup();
 
 		// turn the scoreboard into json, then save it to disk
 		string scoreboardJson = JsonUtility.ToJson(scoreboard);
@@ -37,19 +33,12 @@ public static class FileUtil {
 
 	public static Scoreboard LoadScoreboard() {
 
-		// make sure everything is setup before we do anything more.
-		if (!isSetup) Setup();
-
 		// read our scoreboard from disk in json format, then return it as a scoreboard object
 		string savedScoreboard = File.ReadAllText(scoresFilePath);
 		return JsonUtility.FromJson<Scoreboard>(savedScoreboard);
 	}
 
-	//============================================================
-	// Private Methods:
-	//============================================================
-
-	private static void Setup() {
+	public static void Setup() {
 
 		applicationDataPath = Application.persistentDataPath;
 		storageFolderPath   = applicationDataPath + "/" + STORAGE_FOLDER;
@@ -67,8 +56,16 @@ public static class FileUtil {
 
 		// and within that folder, the scores file exists for storing scores
 		if (!File.Exists(scoresFilePath)) {
-			File.Create(scoresFilePath);
+			fileStream = File.Create(scoresFilePath);
+
+			// clear up all filestream data
+			fileStream.Close();
+			fileStream.Dispose();
+			fileStream = null;
 		}
+
+		// flag that everything is setup
+		isSetup = true;
 	}
 
 }

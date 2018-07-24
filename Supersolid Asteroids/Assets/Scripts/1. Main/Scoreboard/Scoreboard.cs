@@ -57,7 +57,7 @@ public class Scoreboard {
 
 	public void SetupScoreboard() {
 		for (int i = 0; i < SCOREBOARD_SIZE; i++) {
-			scores.Add(new Score("NA", 0));
+			scores.Add(new Score("N/A", 0));
 		}
 	}
 
