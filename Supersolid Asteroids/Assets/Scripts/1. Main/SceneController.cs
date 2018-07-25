@@ -124,6 +124,9 @@ public class SceneController : MonoBehaviour {
 
 	private void State_Game() {
 
+		// hide the cursor during the game, it's hideous
+		Cursor.visible = false;
+
 		// show the game view, and initialise the states
 		guiController.ShowHideGameView(true);
 		

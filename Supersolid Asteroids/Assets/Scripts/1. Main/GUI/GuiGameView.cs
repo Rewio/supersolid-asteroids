@@ -181,6 +181,9 @@ public class GuiGameView : GuiView {
 
 	private void State_EnterPlayerName() {
 
+		// renable the cursor for clicking
+		Cursor.visible = true;
+
 		// hide the game over text view
 		gameOverView.HideView();
 
