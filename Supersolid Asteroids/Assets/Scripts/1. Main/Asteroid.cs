@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Asteroid : BoundaryController {
 
@@ -18,10 +19,17 @@ public class Asteroid : BoundaryController {
 	// Inspector Variables:
 	//============================================================
 
-	[Space(Helper.INSPECTOR_SPACE)]
+	[Space(Helper.INSPECTOR_SPACE_BIG)]
 
 	[SerializeField] private Rigidbody2D rbody;
+	[SerializeField] private Renderer asteroidRenderer;
+	[SerializeField] private Collider2D asteroidCollider;
+	[SerializeField] private AudioSource audioSource;
+
+	[Space(Helper.INSPECTOR_SPACE)]
+
 	[SerializeField] private GameObject deathParticles;
+	[SerializeField] private AudioClip deathSound;
 
 	//============================================================
 	// Private Fields:
@@ -56,9 +64,16 @@ public class Asteroid : BoundaryController {
 			AsteroidDestroyedEvent.Invoke(this, transform.position);
 		}
 
-		// create our deathParticles particles then destroy the gameobject
+		// play the asteroids death sound
+		audioSource.PlayOneShot(deathSound);
+
+		// hide the asteroid and disable the collider so it appears as if the asteroid has exploded
+		asteroidRenderer.enabled = false;
+		asteroidCollider.enabled = false;
+
+		// create our deathParticles particles then destroy the gameobject after the death sound has finished
 		Instantiate(deathParticles, col.transform.position, transform.rotation);
-		Destroy(gameObject);
+		Destroy(gameObject, deathSound.length);
 	}
 
 	//============================================================

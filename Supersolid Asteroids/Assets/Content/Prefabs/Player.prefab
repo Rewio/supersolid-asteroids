@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 212006352247029206}
   - component: {fileID: 50047554927961270}
   - component: {fileID: 60454149018344416}
+  - component: {fileID: 82284960933114986}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -162,6 +163,86 @@ PolygonCollider2D:
       - {x: -0.0020325119, y: 0.42716828}
       - {x: 0.116666675, y: 0.17922044}
       - {x: 0.12296766, y: 0.16463436}
+--- !u!82 &82284960933114986
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646920489483414}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 58e7785b68968e34b95233c41e072d43, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114300137748799862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,6 +263,7 @@ MonoBehaviour:
   playerRenderer: {fileID: 212006352247029206}
   bullet: {fileID: 1073222450086664, guid: 9cc7eaf1d0c4e1647a0bf5cd7fe09a93, type: 2}
   bulletSpawnPoint: {fileID: 1112572851092606}
+  audioSource: {fileID: 82284960933114986}
 --- !u!114 &114819733189420376
 MonoBehaviour:
   m_ObjectHideFlags: 1

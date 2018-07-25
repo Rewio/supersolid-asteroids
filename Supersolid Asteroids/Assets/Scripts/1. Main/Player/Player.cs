@@ -32,13 +32,17 @@ public class Player : BoundaryController {
 	[SerializeField] private GameObject bullet;
 	[SerializeField] private GameObject bulletSpawnPoint;
 
+	[Space(Helper.INSPECTOR_SPACE)]
+
+	[SerializeField] private AudioSource audioSource;
+
 	//============================================================
 	// Private Fields:
 	//============================================================
 
-	private bool isInitialised;
+	public bool isInitialised;
 
-	private Transform bulletContainer;
+	public Transform bulletContainer;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -48,11 +52,21 @@ public class Player : BoundaryController {
 		base.Update();
 
 		// responsible for rotating the player
-		if (Input.GetKey(KeyCode.A)) {
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
 			transform.Rotate(ROTATION_DIRECTION, Time.deltaTime * ROTATION_SPEED);
 		}
-		else if (Input.GetKey(KeyCode.D)) {
+		else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
 			transform.Rotate(-ROTATION_DIRECTION, Time.deltaTime * ROTATION_SPEED);
+		}
+
+		if (Input.GetKeyUp(KeyCode.W)) {
+
+			// if we are making noise but our ship is coming to a stop
+			if (audioSource.isPlaying) {
+
+				// stop the sound from looping instead of prematurely cutting it off
+				audioSource.loop = false;
+			}
 		}
 
 		// if we aren't initialised, we don't have a reference to the bullet container, so we can't shoot until we are
@@ -67,8 +81,15 @@ public class Player : BoundaryController {
 	private void FixedUpdate() {
 
 		// responsible for moving the player forwards
-		if (Input.GetKey(KeyCode.W)) {
+		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
 			playerRbody.AddForce((transform.up * FORCE_STRENGTH) * Time.fixedDeltaTime, ForceMode2D.Impulse);
+
+			// if our ship isn't making any noise
+			if (audioSource.isPlaying) return;
+
+			// play the sound, and make it loop so we don't need to force it to play each time
+			audioSource.Play();
+			audioSource.loop = true;
 		}
 	}
 

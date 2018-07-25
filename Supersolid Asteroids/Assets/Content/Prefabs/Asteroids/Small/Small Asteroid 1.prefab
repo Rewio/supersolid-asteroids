@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 212674470263042080}
   - component: {fileID: 50793911525655836}
   - component: {fileID: 60133493654630688}
+  - component: {fileID: 82730048856291606}
   m_Layer: 8
   m_Name: Small Asteroid 1
   m_TagString: Untagged
@@ -114,6 +115,86 @@ PolygonCollider2D:
       - {x: 0.10833334, y: 0.09166667}
       - {x: 0.10000001, y: -0.14166668}
       - {x: 0.016666668, y: -0.20000002}
+--- !u!82 &82730048856291606
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1610232970722026}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ae39307f637481e4b818f44abd9d648d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1.5
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114265371302361982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,8 +211,12 @@ MonoBehaviour:
   objectHeight: 0.5
   objectWidth: 0.5
   rbody: {fileID: 50793911525655836}
+  asteroidRenderer: {fileID: 212674470263042080}
+  asteroidCollider: {fileID: 60133493654630688}
+  audioSource: {fileID: 82730048856291606}
   deathParticles: {fileID: 1259591222695266, guid: 6e6bb3fa98e344541b73d89e6c12b771,
     type: 2}
+  deathSound: {fileID: 8300000, guid: ae39307f637481e4b818f44abd9d648d, type: 3}
 --- !u!212 &212674470263042080
 SpriteRenderer:
   m_ObjectHideFlags: 1
