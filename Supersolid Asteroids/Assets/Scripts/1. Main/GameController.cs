@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
 
 	private const int STARTING_ASTEROIDS = 4;
 	private const int NUM_WAVES_TO_INCREMENT_SPLIT = 3;
+	private const int DEFAULT_ASTEROID_SPLIT_AMOUNT = 2;
 
 	private const float WAVE_END_DELAY = 3f;
 
@@ -34,7 +35,7 @@ public class GameController : MonoBehaviour {
 	private bool isPlayingGame;
 	private bool isGamePaused;
 
-	private int asteroidSplitAmount   = 2;
+	private int asteroidSplitAmount = 2;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -106,6 +107,9 @@ public class GameController : MonoBehaviour {
 	public void StartGame() {
 
 		isPlayingGame = true;
+
+		// reset our asteroid split amount
+		asteroidSplitAmount = DEFAULT_ASTEROID_SPLIT_AMOUNT;
 
 		// reset our waves survived tracker
 		wavesSurvived = 0;

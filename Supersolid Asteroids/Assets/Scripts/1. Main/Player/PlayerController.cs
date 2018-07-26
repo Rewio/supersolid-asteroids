@@ -52,11 +52,13 @@ public class PlayerController : MonoBehaviour {
 	private void OnEnable() {
 		Player.PlayerDestroyedEvent += Player_PlayerDestroyed; 
 		GameController.NewGameEvent += GameController_NewGame;
+		GuiScoreView.NewLifeEarned  += GuiScoreView_NewLifeEarned;
 	}
 
 	private void OnDisable() {
 		Player.PlayerDestroyedEvent -= Player_PlayerDestroyed;
 		GameController.NewGameEvent -= GameController_NewGame;
+		GuiScoreView.NewLifeEarned  -= GuiScoreView_NewLifeEarned;
 	}
 
 	//============================================================
@@ -100,6 +102,10 @@ public class PlayerController : MonoBehaviour {
 
 		// spawn them into the game
 		SpawnPlayer();
+	}
+
+	private void GuiScoreView_NewLifeEarned() {
+		playersRemainingLives = playersRemainingLives + 1;
 	}
 
 	//============================================================

@@ -32,7 +32,9 @@ public class GuiLivesView : GuiView {
 
 	private void OnEnable() {
 		PlayerController.RemainingLivesUpdate += PlayerController_RemainingLivesUpdate;
+
 		GameController.NewGameEvent += GameController_NewGame;
+		GuiScoreView.NewLifeEarned  += GuiScoreView_NewLifeEarned;
 	}
 
 	private void Start() {
@@ -42,7 +44,9 @@ public class GuiLivesView : GuiView {
 
 	private void OnDisable() {
 		PlayerController.RemainingLivesUpdate -= PlayerController_RemainingLivesUpdate;
+
 		GameController.NewGameEvent -= GameController_NewGame;
+		GuiScoreView.NewLifeEarned  -= GuiScoreView_NewLifeEarned;
 	}
 
 	//============================================================
@@ -58,6 +62,11 @@ public class GuiLivesView : GuiView {
 
 		// reset our local lives tracker, and the graphic showing remaining lives
 		playersRemainingLives = NUM_STARTING_LIVES;
+		UpdateLivesView(playersRemainingLives);
+	}
+
+	private void GuiScoreView_NewLifeEarned() {
+		playersRemainingLives = playersRemainingLives + 1;
 		UpdateLivesView(playersRemainingLives);
 	}
 

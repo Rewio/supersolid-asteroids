@@ -9,7 +9,14 @@ public class GuiScoreView : GuiView {
 
 	private const int SCORE_LARGE_ASTEROID  = 20;
 	private const int SCORE_MEDIUM_ASTEROID = 50;
-	private const int SCORE_SMALL_ASTEROID  = 100;
+	private const int SCORE_SMALL_ASTEROID = 100;
+	private const int SCORE_NEW_LIFE_INCREMENT = 10000;
+
+	//============================================================
+	// Events:
+	//============================================================
+
+	public static event Helper.EventHandler NewLifeEarned;
 
 	//============================================================
 	// Inspector Variables:
@@ -24,6 +31,8 @@ public class GuiScoreView : GuiView {
 	//============================================================
 
 	private int currentScore;
+
+	private int scoreWhenNewLifeGranted = SCORE_NEW_LIFE_INCREMENT;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -49,7 +58,7 @@ public class GuiScoreView : GuiView {
 	// Event Handlers:
 	//============================================================
 
-	private void Asteroid_AsteroidDestroyed(Asteroid asteroid, Vector2 asteroiddeathposition) {
+	private void Asteroid_AsteroidDestroyed(Asteroid asteroid, Vector2 asteroidDeathPosition) {
 
 		// increase the score based on which size asteroid was destroyed
 		switch (asteroid.AsteroidSize) {
@@ -85,6 +94,16 @@ public class GuiScoreView : GuiView {
 	private void IncreaseScore(int additionalScore) {
 		currentScore += additionalScore;
 		scoreText.text = currentScore.ToString();
+
+		if (currentScore < scoreWhenNewLifeGranted) return;
+
+		// increment the score required to earn a new life
+		scoreWhenNewLifeGranted = scoreWhenNewLifeGranted + SCORE_NEW_LIFE_INCREMENT;
+
+		// tell those that are listening that a new life has been earned
+		if (NewLifeEarned != null) {
+			NewLifeEarned.Invoke();
+		}
 	}
 
 }

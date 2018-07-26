@@ -14,6 +14,8 @@ public class AsteroidController : MonoBehaviour {
 	private const float ASTEROID_SPAWN_MODIFIER     = 0.5f;
 	private const float MAXIMUM_VELOCITY_ADJUSTMENT = 45f;
 
+	private const int DEFAULT_ASTEROID_SPLIT_AMOUNT = 2;
+
 	//============================================================
 	// Events:
 	//============================================================
@@ -101,6 +103,9 @@ public class AsteroidController : MonoBehaviour {
 	}
 
 	private void GameController_NewGame() {
+
+		// reset the split amount
+		asteroidSplitAmount = DEFAULT_ASTEROID_SPLIT_AMOUNT;
 
 		// create a local copy of the old asteroids to prevent enumeration errors
 		List<Asteroid> oldAsteroids = trackedAsteroids;
