@@ -48,12 +48,12 @@ public class BoundaryController : MonoBehaviour {
 			// grab the current position to check which side of the screen we left on
 			currentPosition = objectTransform.position;
 
-			// if our x position is greater than the camera width, it was horizontally
+			// if our x position is greater than the camera width, we left horizontally
 			if (Mathf.Abs(currentPosition.x) > cameraWidth) {
 				currentPosition.x += (currentPosition.x > 0) ? (-cameraWidth * 2) - objectWidth : (cameraWidth * 2) + objectWidth;
 			}
 
-			// if it was the y position, it was vertically
+			// if it was the y position, we left vertically
 			else if (Mathf.Abs(currentPosition.y) > cameraHeight) {
 				currentPosition.y += (currentPosition.y > 0) ? (-cameraHeight * 2) - objectHeight : (cameraHeight * 2) + objectHeight;
 			}

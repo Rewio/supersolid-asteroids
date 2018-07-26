@@ -53,10 +53,10 @@ public class Player : BoundaryController {
 
 		// responsible for rotating the player
 		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-			transform.Rotate(ROTATION_DIRECTION, Time.deltaTime * ROTATION_SPEED);
+			transform.Rotate(ROTATION_DIRECTION, ROTATION_SPEED * Time.deltaTime);
 		}
 		else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-			transform.Rotate(-ROTATION_DIRECTION, Time.deltaTime * ROTATION_SPEED);
+			transform.Rotate(-ROTATION_DIRECTION, ROTATION_SPEED * Time.deltaTime);
 		}
 
 		// used to know when the player is no-longer trying to move forward

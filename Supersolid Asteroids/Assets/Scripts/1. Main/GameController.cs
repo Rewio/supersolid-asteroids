@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour {
 	//============================================================
 
 	private int wavesSurvived;
+
+	private bool isPlayingGame;
 	private bool isGamePaused;
 
 	//============================================================
@@ -41,6 +43,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void Update() {
+
+		// if we're not playing the game, we don't need access to these controls
+		if (!isPlayingGame) return;
 
 		if (Input.GetKeyDown(KeyCode.P) && !isGamePaused) {
 			isGamePaused = true;
@@ -72,6 +77,8 @@ public class GameController : MonoBehaviour {
 
 	private void PlayerController_NoLivesRemaining() {
 
+		isPlayingGame = false;
+
 		// if somehow the game ends and everything is paused, unpause and resume normal time scale
 		if (isGamePaused) {
 			isGamePaused = false;
@@ -89,6 +96,8 @@ public class GameController : MonoBehaviour {
 	//============================================================
 
 	public void StartGame() {
+
+		isPlayingGame = true;
 
 		// reset our waves survived tracker
 		wavesSurvived = 0;
