@@ -22,7 +22,6 @@ public class SceneController : MonoBehaviour {
 	[Space(Helper.INSPECTOR_SPACE)]
 
 	[SerializeField] private GuiController guiController;
-	[SerializeField] private PlayerController playerController;
 	[SerializeField] private GameController gameController;
 
 	//============================================================

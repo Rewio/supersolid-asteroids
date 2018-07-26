@@ -1,10 +1,15 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Asteroid : BoundaryController {
 
 	//============================================================
 	// Constants:
+	//============================================================
+
+	private const int ASTEROID_ROTATION_SPEED = 50;
+
+	//============================================================
+	// Delegates:
 	//============================================================
 
 	public delegate void AsteroidDestroyedDelegate(Asteroid asteroid, Vector2 asteroidDeathPosition);
@@ -54,7 +59,7 @@ public class Asteroid : BoundaryController {
 		// make sure we don't do anything before initialising, otherwise we may null reference
 		if (!hasBeenInitialised) return;
 
-		transform.Rotate(Vector3.forward, 1);
+		transform.Rotate(Vector3.forward, ASTEROID_ROTATION_SPEED * Time.deltaTime);
 	}
 
 	private void OnCollisionEnter2D(Collision2D col) {

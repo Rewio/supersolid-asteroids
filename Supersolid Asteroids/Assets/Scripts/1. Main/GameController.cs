@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
 	//============================================================
 
 	private int wavesSurvived;
+	private bool isGamePaused;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -37,6 +38,17 @@ public class GameController : MonoBehaviour {
 	private void OnEnable() {
 		AsteroidController.AllAsteroidsDestroyedEvent += AsteroidController_AllAsteroidsDestroyed;
 		PlayerController.NoLivesRemaining += PlayerController_NoLivesRemaining;
+	}
+
+	private void Update() {
+
+		if (Input.GetKeyDown(KeyCode.P) && !isGamePaused) {
+			isGamePaused = true;
+			Time.timeScale = 0;
+		} else if (Input.GetKeyDown(KeyCode.P) && isGamePaused) {
+			isGamePaused = false;
+			Time.timeScale = 1;
+		}
 	}
 
 	private void OnDisable() {
@@ -59,6 +71,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void PlayerController_NoLivesRemaining() {
+
+		// if somehow the game ends and everything is paused, unpause and resume normal time scale
+		if (isGamePaused) {
+			isGamePaused = false;
+			Time.timeScale = 1;
+		}
 
 		// tell the world that the game has ended
 		if (GameOverEvent != null) {

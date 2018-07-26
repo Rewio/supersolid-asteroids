@@ -59,6 +59,7 @@ public class Player : BoundaryController {
 			transform.Rotate(-ROTATION_DIRECTION, Time.deltaTime * ROTATION_SPEED);
 		}
 
+		// used to know when the player is no-longer trying to move forward
 		if (Input.GetKeyUp(KeyCode.W)) {
 
 			// if we are making noise but our ship is coming to a stop
@@ -73,7 +74,7 @@ public class Player : BoundaryController {
 		if (!isInitialised) return;
 
 		// allows the player to shoot their guns by pressing space or left click
-		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) {
+		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0) && Time.timeScale != 0) {
 			Instantiate(bullet, bulletSpawnPoint.transform.position, transform.localRotation, bulletContainer.transform);
 		}
 	}
@@ -84,7 +85,7 @@ public class Player : BoundaryController {
 		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
 			playerRbody.AddForce((transform.up * FORCE_STRENGTH) * Time.fixedDeltaTime, ForceMode2D.Impulse);
 
-			// if our ship isn't making any noise
+			// if our ship isn't making any noise, we don't need to do anything further
 			if (audioSource.isPlaying) return;
 
 			// play the sound, and make it loop so we don't need to force it to play each time
