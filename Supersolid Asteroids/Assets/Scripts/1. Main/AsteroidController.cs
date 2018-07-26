@@ -53,7 +53,6 @@ public class AsteroidController : MonoBehaviour {
 
 	private int asteroidSplitAmount = 2;
 
-	[SerializeField]
 	private List<Transform> spawnTransformsCopy;
 
 	//============================================================

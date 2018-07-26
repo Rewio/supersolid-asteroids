@@ -18,6 +18,7 @@ public class GuiLivesView : GuiView {
 
 	[SerializeField] private Image livesPanel;
 	[SerializeField] private float widthPerLife;
+	[SerializeField] private AudioSource audioSource;
 
 	//============================================================
 	// Private Fields:
@@ -68,6 +69,9 @@ public class GuiLivesView : GuiView {
 	private void GuiScoreView_NewLifeEarned() {
 		playersRemainingLives = playersRemainingLives + 1;
 		UpdateLivesView(playersRemainingLives);
+
+		// play the new life sound
+		audioSource.Play();
 	}
 
 	//============================================================
