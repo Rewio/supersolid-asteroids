@@ -9,8 +9,6 @@ public class AsteroidController : MonoBehaviour {
 	// Constants:
 	//============================================================
 
-	private const int ASTEROID_SPLIT_AMOUNT = 2;
-
 	private const float ASTEROID_VELOCITY_MODIFIER  = 1.5f;
 	private const float ASTEROID_MAXIMUM_VELOCITY   = 100f;
 	private const float ASTEROID_SPAWN_MODIFIER     = 0.5f;
@@ -51,6 +49,8 @@ public class AsteroidController : MonoBehaviour {
 
 	private readonly List<Asteroid> trackedAsteroids = new List<Asteroid>();
 
+	private int asteroidSplitAmount = 2;
+
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
@@ -89,7 +89,7 @@ public class AsteroidController : MonoBehaviour {
 		AsteroidSizes newAsteroidSize = asteroid.AsteroidSize + 1;
 
 		// spawn the number of asteroids that the asteroid splits into on death
-		for (int i = 0; i < ASTEROID_SPLIT_AMOUNT; i++) {
+		for (int i = 0; i < asteroidSplitAmount; i++) {
 
 			// here, we are slightly adjusting the angle of velocity so the asteroids direction changes
 			// this is randomised so the new asteroids head in their own directions
@@ -118,7 +118,12 @@ public class AsteroidController : MonoBehaviour {
 	// Public Methods:
 	//============================================================
 
-	public void SpawnAsteroids(int numberOfAsteroids) {
+	public void SpawnAsteroids(int newAsteroidSplitAmount, int numberOfAsteroids) {
+
+		// update the asteroid split amount if it has changed
+		if (newAsteroidSplitAmount > asteroidSplitAmount) {
+			asteroidSplitAmount = newAsteroidSplitAmount;
+		}
 
 		for (int i = 0; i < numberOfAsteroids; i++) {
 

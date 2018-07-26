@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
 	//============================================================
 
 	private const int STARTING_ASTEROIDS = 4;
+	private const int NUM_WAVES_TO_INCREMENT_SPLIT = 3;
 
 	private const float WAVE_END_DELAY = 3f;
 
@@ -32,6 +33,8 @@ public class GameController : MonoBehaviour {
 
 	private bool isPlayingGame;
 	private bool isGamePaused;
+
+	private int asteroidSplitAmount   = 2;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -69,9 +72,14 @@ public class GameController : MonoBehaviour {
 
 		wavesSurvived = wavesSurvived + 1;
 
+		// every x waves, increase the amount of asteroids that spawn when one dies
+		if (wavesSurvived % NUM_WAVES_TO_INCREMENT_SPLIT == 0) {
+			asteroidSplitAmount = asteroidSplitAmount + 1;
+		}
+
 		// after a short delay, begin the games next wave
 		helper.InvokeActionDelayed(
-			() => { StartContinueGame(wavesSurvived);}
+			() => { StartContinueGame(asteroidSplitAmount, wavesSurvived); }
 			, WAVE_END_DELAY);
 	}
 
@@ -108,15 +116,15 @@ public class GameController : MonoBehaviour {
 		}
 
 		// spawn the first bunch of asteroids
-		StartContinueGame();
+		StartContinueGame(asteroidSplitAmount);
 	}
 
 	//============================================================
 	// Private Methods:
 	//============================================================
 
-	private void StartContinueGame(int additionalAsteroids = 0) {
-		asteroidController.SpawnAsteroids(STARTING_ASTEROIDS + additionalAsteroids);
+	private void StartContinueGame(int newAsteroidSplitAmount, int additionalAsteroids = 0) {
+		asteroidController.SpawnAsteroids(newAsteroidSplitAmount, STARTING_ASTEROIDS + additionalAsteroids);
 	}
 
 }
