@@ -53,6 +53,9 @@ public class AsteroidController : MonoBehaviour {
 
 	private int asteroidSplitAmount = 2;
 
+	[SerializeField]
+	private List<Transform> spawnTransformsCopy;
+
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
@@ -130,12 +133,26 @@ public class AsteroidController : MonoBehaviour {
 			asteroidSplitAmount = newAsteroidSplitAmount;
 		}
 
+		// create a copy of the spawn positions
+		spawnTransformsCopy = new List<Transform>(asteroidSpawnPositions);
+
 		for (int i = 0; i < numberOfAsteroids; i++) {
 
+			// if our copied list is empty, copy the list over again
+			if (spawnTransformsCopy.Count == 0) {
+				spawnTransformsCopy = new List<Transform>(asteroidSpawnPositions);
+			}
+
+			// generate a random spawn position
+			int randomSpawnPosition = Random.Range(0, spawnTransformsCopy.Count);
+
 			// generate a random starting position and starting velocity for the new asteroid
-			Vector2 spawnPosition = asteroidSpawnPositions[Random.Range(0, asteroidSpawnPositions.Count)].position;
+			Vector2 spawnPosition = spawnTransformsCopy[randomSpawnPosition].position;
 			Vector2 startingVelocity = new Vector2(Random.Range(-ASTEROID_MAXIMUM_VELOCITY, ASTEROID_MAXIMUM_VELOCITY),
 			                                       Random.Range(-ASTEROID_MAXIMUM_VELOCITY, ASTEROID_MAXIMUM_VELOCITY));
+
+			// remove that spawn position from the copied list so it not repeated until all positions are used
+			spawnTransformsCopy.RemoveAt(randomSpawnPosition);
 
 			SpawnNewAsteroid(AsteroidSizes.Large, spawnPosition, startingVelocity);
 		}
