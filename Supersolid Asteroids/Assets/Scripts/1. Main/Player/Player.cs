@@ -15,7 +15,7 @@ public class Player : BoundaryController {
 	// Events:
 	//============================================================
 
-	public static event Helper.EventHandler PlayerDestroyedEvent;
+	public static event Helper.EventHandler PlayerDestroyed;
 
 	//============================================================
 	// Inspector Variables:
@@ -29,7 +29,7 @@ public class Player : BoundaryController {
 
 	[Space(Helper.INSPECTOR_SPACE)]
 
-	[SerializeField] private GameObject bullet;
+	[SerializeField] private Bullet bullet;
 	[SerializeField] private GameObject bulletSpawnPoint;
 
 	[Space(Helper.INSPECTOR_SPACE)]
@@ -48,7 +48,7 @@ public class Player : BoundaryController {
 	// Unity Lifecycle:
 	//============================================================
 
-	public override void Update() {
+	protected override void Update() {
 		base.Update();
 
 		// responsible for rotating the player
@@ -60,7 +60,7 @@ public class Player : BoundaryController {
 		}
 
 		// used to know when the player is no-longer trying to move forward
-		if (Input.GetKeyUp(KeyCode.W)) {
+		if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow)) {
 
 			// if we are making noise but our ship is coming to a stop
 			if (audioSource.isPlaying) {
@@ -75,7 +75,8 @@ public class Player : BoundaryController {
 
 		// allows the player to shoot their guns by pressing space or left click
 		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0) && Time.timeScale != 0) {
-			Instantiate(bullet, bulletSpawnPoint.transform.position, transform.localRotation, bulletContainer.transform);
+			Bullet theBullet = Instantiate(bullet, bulletSpawnPoint.transform.position, transform.localRotation, bulletContainer.transform);
+			theBullet.Init();
 		}
 	}
 
@@ -98,8 +99,8 @@ public class Player : BoundaryController {
 	private void OnCollisionEnter2D(Collision2D col) {
 
 		// alert those that are listening that we have been destroyed
-		if (PlayerDestroyedEvent != null) {
-			PlayerDestroyedEvent.Invoke();
+		if (PlayerDestroyed != null) {
+			PlayerDestroyed.Invoke();
 		}
 
 		// then destroy the gameobject

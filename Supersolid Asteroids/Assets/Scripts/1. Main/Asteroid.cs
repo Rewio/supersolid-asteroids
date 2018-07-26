@@ -53,8 +53,14 @@ public class Asteroid : BoundaryController {
 	// Unity Lifecycle:
 	//============================================================
 
-	public override void Update() {
+	protected override void Update() {
 		base.Update();
+
+#if UNITY_EDITOR
+		if (Input.GetKeyDown(KeyCode.Return)) {
+			OnCollisionEnter2D(null);
+		}
+#endif
 
 		// make sure we don't do anything before initialising, otherwise we may null reference
 		if (!hasBeenInitialised) return;
@@ -77,7 +83,9 @@ public class Asteroid : BoundaryController {
 		asteroidCollider.enabled = false;
 
 		// create our deathParticles particles then destroy the gameobject after the death sound has finished
-		Instantiate(deathParticles, col.transform.position, transform.rotation);
+
+		// TODO: change transform.position back to col.transform.position!!!!!!!
+		Instantiate(deathParticles, transform.position, transform.rotation);
 		Destroy(gameObject, deathSound.length);
 	}
 

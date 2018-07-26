@@ -20,7 +20,7 @@ public class AsteroidController : MonoBehaviour {
 	// Events:
 	//============================================================
 
-	public static event Helper.EventHandler AllAsteroidsDestroyedEvent;
+	public static event Helper.EventHandler AllAsteroidsDestroyed;
 
 	//============================================================
 	// Type Definitions:
@@ -61,12 +61,12 @@ public class AsteroidController : MonoBehaviour {
 
 	private void OnEnable() {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
-		GameController.NewGameEvent     += GameController_NewGame;
+		GameController.NewGame     += GameController_NewGame;
 	}
 
 	private void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
-		GameController.NewGameEvent     -= GameController_NewGame;
+		GameController.NewGame     -= GameController_NewGame;
 	}
 
 	//============================================================
@@ -80,8 +80,8 @@ public class AsteroidController : MonoBehaviour {
 
 		// if the last asteroid was destroyed, send an alert so the next wave can begin
 		if (trackedAsteroids.Count == 0 && asteroid.AsteroidSize == AsteroidSizes.Small) {
-			if (AllAsteroidsDestroyedEvent != null) {
-				AllAsteroidsDestroyedEvent.Invoke();
+			if (AllAsteroidsDestroyed != null) {
+				AllAsteroidsDestroyed.Invoke();
 			}
 			return;
 		}
@@ -125,10 +125,10 @@ public class AsteroidController : MonoBehaviour {
 	// Public Methods:
 	//============================================================
 
-	public void SpawnAsteroids(int newAsteroidSplitAmount, int numberOfAsteroids) {
+	public void SpawnAsteroids(int numberOfAsteroids, int newAsteroidSplitAmount = 0) {
 
 		// update the asteroid split amount if it has changed
-		if (newAsteroidSplitAmount > asteroidSplitAmount) {
+		if (newAsteroidSplitAmount != 0) {
 			asteroidSplitAmount = newAsteroidSplitAmount;
 		}
 

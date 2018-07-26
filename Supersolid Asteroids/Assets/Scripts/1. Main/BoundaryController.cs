@@ -31,7 +31,7 @@ public class BoundaryController : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	public virtual void Start() {
+	protected virtual void Start() {
 		mainCamera = Camera.main;
 
 		cameraHeight = mainCamera.orthographicSize;
@@ -40,7 +40,7 @@ public class BoundaryController : MonoBehaviour {
 		planes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
 	}
 
-	public virtual void Update() {
+	protected virtual void Update() {
 
 		// check if the object is no-longer visible by the camera
 		if (!GeometryUtility.TestPlanesAABB(planes, objectCollider.bounds)) {

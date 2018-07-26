@@ -261,9 +261,11 @@ MonoBehaviour:
   playerRbody: {fileID: 50047554927961270}
   playerCollider: {fileID: 60454149018344416}
   playerRenderer: {fileID: 212006352247029206}
-  bullet: {fileID: 1073222450086664, guid: 9cc7eaf1d0c4e1647a0bf5cd7fe09a93, type: 2}
+  bullet: {fileID: 114471724630185076, guid: 9cc7eaf1d0c4e1647a0bf5cd7fe09a93, type: 2}
   bulletSpawnPoint: {fileID: 1112572851092606}
   audioSource: {fileID: 82284960933114986}
+  isInitialised: 0
+  bulletContainer: {fileID: 0}
 --- !u!114 &114819733189420376
 MonoBehaviour:
   m_ObjectHideFlags: 1

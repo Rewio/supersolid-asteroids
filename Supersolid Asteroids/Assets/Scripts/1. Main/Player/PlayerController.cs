@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	//============================================================
 
 	public delegate void RemainingLivesUpdateDelegate(int remainingLives);
+	public delegate void GetPlayerDelegate(Transform thePlayer);
 
 	//============================================================
 	// Events:
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 
 	public static event RemainingLivesUpdateDelegate RemainingLivesUpdate;
 	public static event Helper.EventHandler NoLivesRemaining;
+	public static event GetPlayerDelegate GetPlayer;
 
 	//============================================================
 	// Inspector Variables:
@@ -45,19 +47,29 @@ public class PlayerController : MonoBehaviour {
 
 	private float timeLastLifeRemoved;
 
+	private Player player;
+
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
 
 	private void OnEnable() {
-		Player.PlayerDestroyedEvent += Player_PlayerDestroyed; 
-		GameController.NewGameEvent += GameController_NewGame;
+		Player.PlayerDestroyed += Player_PlayerDestroyed; 
+		GameController.NewGame += GameController_NewGame;
 		GuiScoreView.NewLifeEarned  += GuiScoreView_NewLifeEarned;
 	}
 
+	private void Update() {
+
+		// keep checking if someone needs the player position
+		if (GetPlayer != null && player != null) {
+			GetPlayer.Invoke(player.transform);
+		}
+	}
+
 	private void OnDisable() {
-		Player.PlayerDestroyedEvent -= Player_PlayerDestroyed;
-		GameController.NewGameEvent -= GameController_NewGame;
+		Player.PlayerDestroyed -= Player_PlayerDestroyed;
+		GameController.NewGame -= GameController_NewGame;
 		GuiScoreView.NewLifeEarned  -= GuiScoreView_NewLifeEarned;
 	}
 
@@ -115,7 +127,7 @@ public class PlayerController : MonoBehaviour {
 	private void SpawnPlayer(float invulnerabilityDuration = 0) {
 
 		// respawn the player in the centre of the play area
-		Player player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, transform);
+		player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, transform);
 		player.Init(bulletContainer, invulnerabilityDuration);
 	}
 

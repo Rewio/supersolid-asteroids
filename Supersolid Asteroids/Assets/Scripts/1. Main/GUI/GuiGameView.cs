@@ -73,13 +73,13 @@ public class GuiGameView : GuiView {
 	//============================================================
 
 	private void OnEnable() {
-		GameController.NewGameEvent += GameController_NewGame;
+		GameController.NewGame += GameController_NewGame;
 
 	}
 
 	private void OnDisable() {
-		GameController.GameOverEvent -= GameController_GameOver;
-		GameController.NewGameEvent  -= GameController_NewGame;
+		GameController.GameOver -= GameController_GameOver;
+		GameController.NewGame  -= GameController_NewGame;
 	}
 
 	//============================================================
@@ -167,7 +167,7 @@ public class GuiGameView : GuiView {
 		livesView.ShowView();
 
 		// listen out for when the game ends, so we can proceed
-		GameController.GameOverEvent += GameController_GameOver;
+		GameController.GameOver += GameController_GameOver;
 	}
 
 	private void State_GameOver() {

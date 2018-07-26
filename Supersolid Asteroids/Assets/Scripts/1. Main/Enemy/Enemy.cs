@@ -7,13 +7,19 @@ public class Enemy : BoundaryController {
 	// Constants:
 	//============================================================
 
-	private const float DELAY_BETWEEN_SHOTS = 2f;
+	private const float DELAY_BETWEEN_SHOTS = 4f;
 
-	private const float ENEMY_VELOCITY = 300f;
-	private const float BULLET_VELOCITY = 2f;
+	private const float ENEMY_VELOCITY = 150f;
+	private const float BULLET_VELOCITY = 500f;
 
 	private const float MOVEMENT_CHANGE_DELAY  = 3f;
 	private const float MOVEMENT_CHANGE_DEGREE = 45;
+
+	//============================================================
+	// Events:
+	//============================================================
+
+	public static event Helper.EventHandler EnemyDestroyed;
 
 	//============================================================
 	// Inspector Variables:
@@ -26,9 +32,11 @@ public class Enemy : BoundaryController {
 
 	[Space(Helper.INSPECTOR_SPACE)]
 
-	[SerializeField] private GameObject deathParticles;
+	[SerializeField] private AudioSource audioSource;
 
-	public Transform testTransform;
+	[Space(Helper.INSPECTOR_SPACE)]
+
+	[SerializeField] private GameObject deathParticles;
 
 	//============================================================
 	// Private Fields:
@@ -36,7 +44,6 @@ public class Enemy : BoundaryController {
 
 	private Transform playerTransform;
 
-	private bool isInitialised;
 	private float nextShootTime;
 
 	private IEnumerator movementChangerEnumerator;
@@ -45,38 +52,59 @@ public class Enemy : BoundaryController {
 	// Unity Lifecycle:
 	//============================================================
 
-	public override void Start() {
+	protected void OnEnable() {
+		GameController.GameOver += GameController_GameOver;
+	}
+
+	protected override void Start() {
 		base.Start();
 
 		// randomly decide if the enemy will go from left to right, or right to left
 		Vector3 direction = (Random.Range(0, 2) == 0) ? transform.right : -transform.right;
-
 		enemyRigidbody.velocity = (direction * ENEMY_VELOCITY) * Time.fixedDeltaTime;
+
+		// add an initial delay to the shooting
+		nextShootTime = Time.time + DELAY_BETWEEN_SHOTS;
+
+		// start the coroutine responsible for changing movement
 		StartCoroutine(movementChangerEnumerator = MovementChangerCoroutine());
 	}
 
-	public override void Update() {
+	protected override void Update() {
 		base.Update();
 
+		// if we have lost the player transform, subscribe to the event and grab it
+		if (playerTransform == null) {
+			PlayerController.GetPlayer += PlayerController_GetPlayer;
+		}
+
 		// check if our shoot time has elapsed, and we have been initialised
-		if (nextShootTime > Time.time || !isInitialised) return;
+		if (nextShootTime > Time.time || playerTransform == null) return;
 
 		// add a delay to our shots
 		nextShootTime = Time.time + DELAY_BETWEEN_SHOTS;
 
-		// calcuate the angle we need to fire from us towards the players ship
-		Vector3    direction = transform.up * BULLET_VELOCITY;
-		Quaternion rotation  = Quaternion.FromToRotation(direction, testTransform.position);
+		// create the shot vector for the bullet to use as its velocity
+		Vector3 shotDirection = playerTransform.position - transform.position;
 
 		// spawn in the bullet with it rotated towards the player
-		Instantiate(enemyBulletPrefab, transform.position, rotation);
+		Bullet bullet = Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
+		bullet.Init(shotDirection.normalized * BULLET_VELOCITY);
 	}
 
-	private void OnCollisionEnter2D(Collision2D col) {
+	protected void OnCollisionEnter2D(Collision2D col) {
+
+		if (EnemyDestroyed != null) {
+			EnemyDestroyed.Invoke();
+		}
+
+		Instantiate(deathParticles, transform.position, transform.rotation);
 		Destroy(gameObject);
 	}
 
 	private void OnDisable() {
+		PlayerController.GetPlayer -= PlayerController_GetPlayer;
+		GameController.GameOver    -= GameController_GameOver;
 
 		if (movementChangerEnumerator == null) return;
 
@@ -85,12 +113,20 @@ public class Enemy : BoundaryController {
 	}
 
 	//============================================================
-	// Public Methods:
+	// Event Handlers:
 	//============================================================
 
-	public void Init(Transform thePlayersTransform) {
-		playerTransform = thePlayersTransform;
-		isInitialised = true;
+	private void PlayerController_GetPlayer(Transform thePlayer) {
+		playerTransform = thePlayer;
+
+		// we no-longer need this, unsubscribe
+		PlayerController.GetPlayer -= PlayerController_GetPlayer;
+	}
+
+	private void GameController_GameOver() {
+
+		// stop the audio source from playing, it gets annoying
+		audioSource.Stop();
 	}
 
 	//============================================================

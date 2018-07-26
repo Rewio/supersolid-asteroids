@@ -34,7 +34,7 @@ public class GuiLivesView : GuiView {
 	private void OnEnable() {
 		PlayerController.RemainingLivesUpdate += PlayerController_RemainingLivesUpdate;
 
-		GameController.NewGameEvent += GameController_NewGame;
+		GameController.NewGame += GameController_NewGame;
 		GuiScoreView.NewLifeEarned  += GuiScoreView_NewLifeEarned;
 	}
 
@@ -46,7 +46,7 @@ public class GuiLivesView : GuiView {
 	private void OnDisable() {
 		PlayerController.RemainingLivesUpdate -= PlayerController_RemainingLivesUpdate;
 
-		GameController.NewGameEvent -= GameController_NewGame;
+		GameController.NewGame -= GameController_NewGame;
 		GuiScoreView.NewLifeEarned  -= GuiScoreView_NewLifeEarned;
 	}
 

@@ -40,8 +40,8 @@ public class GuiScoreView : GuiView {
 
 	private void OnEnable() {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
-		GameController.NewGameEvent     += GameController_NewGame;
-		GameController.GameOverEvent    += GameController_GameOver;
+		GameController.NewGame     += GameController_NewGame;
+		GameController.GameOver    += GameController_GameOver;
 	}
 
 	private void Start() {
@@ -50,8 +50,8 @@ public class GuiScoreView : GuiView {
 
 	private void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
-		GameController.NewGameEvent     -= GameController_NewGame;
-		GameController.GameOverEvent    += GameController_GameOver;
+		GameController.NewGame     -= GameController_NewGame;
+		GameController.GameOver    += GameController_GameOver;
 	}
 
 	//============================================================
