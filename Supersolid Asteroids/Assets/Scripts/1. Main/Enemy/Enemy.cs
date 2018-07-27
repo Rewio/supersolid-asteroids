@@ -39,10 +39,14 @@ public class Enemy : BoundaryController {
 	[SerializeField] private GameObject deathParticles;
 
 	//============================================================
-	// Private Fields:
+	// Public Properties:
 	//============================================================
 
-	private Transform playerTransform;
+	public Transform PlayerTransform { get; set; }
+
+	//============================================================
+	// Private Fields:
+	//============================================================
 
 	private float nextShootTime;
 
@@ -73,19 +77,14 @@ public class Enemy : BoundaryController {
 	protected override void Update() {
 		base.Update();
 
-		// if we have lost the player transform, subscribe to the event and grab it
-		if (playerTransform == null) {
-			PlayerController.GetPlayer += PlayerController_GetPlayer;
-		}
-
 		// check if our shoot time has elapsed, and we have been initialised
-		if (nextShootTime > Time.time || playerTransform == null) return;
+		if (nextShootTime > Time.time || PlayerTransform == null) return;
 
 		// add a delay to our shots
 		nextShootTime = Time.time + DELAY_BETWEEN_SHOTS;
 
 		// create the shot vector for the bullet to use as its velocity
-		Vector3 shotDirection = playerTransform.position - transform.position;
+		Vector3 shotDirection = PlayerTransform.position - transform.position;
 
 		// spawn in the bullet with it rotated towards the player
 		Bullet bullet = Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
@@ -103,8 +102,7 @@ public class Enemy : BoundaryController {
 	}
 
 	private void OnDisable() {
-		PlayerController.GetPlayer -= PlayerController_GetPlayer;
-		GameController.GameOver    -= GameController_GameOver;
+		GameController.GameOver -= GameController_GameOver;
 
 		if (movementChangerEnumerator == null) return;
 
@@ -115,13 +113,6 @@ public class Enemy : BoundaryController {
 	//============================================================
 	// Event Handlers:
 	//============================================================
-
-	private void PlayerController_GetPlayer(Transform thePlayer) {
-		playerTransform = thePlayer;
-
-		// we no-longer need this, unsubscribe
-		PlayerController.GetPlayer -= PlayerController_GetPlayer;
-	}
 
 	private void GameController_GameOver() {
 

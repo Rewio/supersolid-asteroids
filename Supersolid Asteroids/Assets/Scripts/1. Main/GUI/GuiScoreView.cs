@@ -10,6 +10,8 @@ public class GuiScoreView : GuiView {
 	private const int SCORE_LARGE_ASTEROID  = 20;
 	private const int SCORE_MEDIUM_ASTEROID = 50;
 	private const int SCORE_SMALL_ASTEROID = 100;
+	private const int SCORE_ENEMY_SHIP     = 200;
+
 	private const int SCORE_NEW_LIFE_INCREMENT = 10000;
 
 	//============================================================
@@ -42,6 +44,7 @@ public class GuiScoreView : GuiView {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
 		GameController.NewGame     += GameController_NewGame;
 		GameController.GameOver    += GameController_GameOver;
+		Enemy.EnemyDestroyed += Enemy_EnemyDestroyed;
 	}
 
 	private void Start() {
@@ -51,7 +54,8 @@ public class GuiScoreView : GuiView {
 	private void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
 		GameController.NewGame     -= GameController_NewGame;
-		GameController.GameOver    += GameController_GameOver;
+		GameController.GameOver    -= GameController_GameOver;
+		Enemy.EnemyDestroyed -= Enemy_EnemyDestroyed;
 	}
 
 	//============================================================
@@ -74,7 +78,14 @@ public class GuiScoreView : GuiView {
 		}
 	}
 
+	private void Enemy_EnemyDestroyed() {
+		IncreaseScore(SCORE_ENEMY_SHIP);
+	}
+
 	private void GameController_NewGame() {
+
+		// reset our new life score
+		scoreWhenNewLifeGranted = SCORE_NEW_LIFE_INCREMENT;
 
 		// reset our score value, and the ui's score value
 		currentScore = 0;

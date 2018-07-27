@@ -48,6 +48,7 @@ public class GuiGameView : GuiView {
 	[SerializeField] private GuiView enterNameView;
 	[SerializeField] private GuiView playerNameView;
 	[SerializeField] private GuiView acceptNameView;
+	[SerializeField] private GuiView gamePausedView;
 
 	[Space(Helper.INSPECTOR_SPACE)]
 
@@ -74,12 +75,13 @@ public class GuiGameView : GuiView {
 
 	private void OnEnable() {
 		GameController.NewGame += GameController_NewGame;
-
+		GameController.GamePaused += GameController_GamePaused;
 	}
 
 	private void OnDisable() {
-		GameController.GameOver -= GameController_GameOver;
-		GameController.NewGame  -= GameController_NewGame;
+		GameController.GameOver   -= GameController_GameOver;
+		GameController.NewGame    -= GameController_NewGame;
+		GameController.GamePaused -= GameController_GamePaused;
 	}
 
 	//============================================================
@@ -106,6 +108,15 @@ public class GuiGameView : GuiView {
 		// reset the players name
 		playerNameText = "";
 		playerNameTextField.text = playerNameText;
+	}
+
+	private void GameController_GamePaused() {
+		if (gamePausedView.State == GuiView.States.Hidden) {
+			gamePausedView.ShowView();
+		}
+		else {
+			gamePausedView.HideView();
+		}
 	}
 
 	//============================================================
@@ -267,6 +278,7 @@ public class GuiGameView : GuiView {
 		enterNameView.HideView();
 		playerNameView.HideView();
 		acceptNameView.HideView();
+		gamePausedView.HideView();
 	}
 
 }

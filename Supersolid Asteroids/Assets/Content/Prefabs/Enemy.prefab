@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 114433123958080856}
   - component: {fileID: 212462439332633732}
   - component: {fileID: 50571353653391396}
-  - component: {fileID: 61665349993042716}
   - component: {fileID: 82921177813206470}
+  - component: {fileID: 60029949613842734}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -64,8 +64,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61665349993042716
-BoxCollider2D:
+--- !u!60 &60029949613842734
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -76,19 +76,48 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03966415}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 1.4625, y: 1.1125}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.5606717}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.49375, y: 0.01875}
+      - {x: 0.35625002, y: 0.14375}
+      - {x: 0.33125, y: 0.31875}
+      - {x: 0.30625, y: 0.36875}
+      - {x: 0.20625, y: 0.48125002}
+      - {x: 0.03125, y: 0.49375}
+      - {x: -0.09375, y: 0.49375}
+      - {x: -0.26875, y: 0.35625002}
+      - {x: -0.31875, y: 0.29375002}
+      - {x: -0.41875002, y: 0.081250004}
+      - {x: -0.73125, y: -0.15625}
+      - {x: -0.73125, y: -0.19375001}
+      - {x: -0.69375, y: -0.25625}
+      - {x: -0.36875, y: -0.44375}
+      - {x: 0.40625, y: -0.44375}
+      - {x: 0.73125, y: -0.19375001}
+      - {x: 0.73125, y: -0.15625}
+      - {x: 0.65625, y: -0.081250004}
+    - - {x: -0.48125002, y: -0.24375}
+      - {x: 0.54375, y: -0.21875}
+      - {x: 0.38125, y: -0.34375}
+      - {x: -0.34375, y: -0.33125}
+    - - {x: -0.36875, y: 0.00625}
+      - {x: 0.54375, y: -0.13125001}
+      - {x: -0.55625004, y: -0.14375}
+      - {x: -0.54375, y: -0.14375}
+    - - {x: -0.056250002, y: 0.39375}
+      - {x: 0.15625, y: 0.36875}
+      - {x: 0.24375, y: 0.13125001}
+      - {x: -0.24375, y: 0.11875}
 --- !u!82 &82921177813206470
 AudioSource:
   m_ObjectHideFlags: 1
@@ -180,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba59b79a3196b2f4c8065717a913f934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectCollider: {fileID: 61665349993042716}
+  objectCollider: {fileID: 60029949613842734}
   objectTransform: {fileID: 4855367704591144}
   objectHeight: 0.4
   objectWidth: 0.4
@@ -224,7 +253,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: da21eac9b41e66243947838665378679, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 939f20f8e88349c45af7e073ee6bd81c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

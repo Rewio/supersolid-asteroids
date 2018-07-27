@@ -32,7 +32,8 @@ public class EnemyController : MonoBehaviour {
 	// Private Fields:
 	//============================================================
 
-	private Enemy latestEnemy;
+	private Enemy trackedEnemy;
+	private Transform playerTransform;
 
 	private int enemiesToSpawnThisWave;
 
@@ -43,11 +44,13 @@ public class EnemyController : MonoBehaviour {
 	private void OnEnable() {
 		Enemy.EnemyDestroyed   += Enemy_EnemyDestroyed;
 		GameController.NewGame += GameController_NewGame;
+		PlayerController.NewPlayer += PlayerController_NewPlayer;
 	}
 
 	private void OnDisable() {
 		Enemy.EnemyDestroyed   -= Enemy_EnemyDestroyed;
 		GameController.NewGame -= GameController_NewGame;
+		PlayerController.NewPlayer -= PlayerController_NewPlayer;
 	}
 
 	//============================================================
@@ -72,8 +75,16 @@ public class EnemyController : MonoBehaviour {
 	private void GameController_NewGame() {
 
 		// if the enemy is still alive after the game has restarted, destroy them
-		if (latestEnemy == null) return;
-		Destroy(latestEnemy.gameObject);
+		if (trackedEnemy == null) return;
+		Destroy(trackedEnemy.gameObject);
+	}
+
+	private void PlayerController_NewPlayer(Transform newPlayerTransform) {
+		playerTransform = newPlayerTransform;
+
+		// the enemy might have died, lets make sure they're alive and well
+		if (trackedEnemy == null) return;
+		trackedEnemy.PlayerTransform = playerTransform;
 	}
 
 	//============================================================
@@ -102,7 +113,8 @@ public class EnemyController : MonoBehaviour {
 		// spawn our new enemy after a delay if one is set
 		helper.InvokeActionDelayed(() => {
 			Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, spawnedEnemyContainer);
-			latestEnemy = enemy;
+			enemy.PlayerTransform = playerTransform;
+			trackedEnemy = enemy;
 		}, spawnDelay);
 	}
 
