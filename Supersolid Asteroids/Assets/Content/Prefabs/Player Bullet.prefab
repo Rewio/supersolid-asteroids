@@ -184,7 +184,7 @@ MonoBehaviour:
   objectTransform: {fileID: 4194175663012054}
   objectHeight: 0.08
   objectWidth: 0.08
-  lifetime: 1
+  lifetime: 1.25
   velocityModifier: 750
   rbody: {fileID: 50393560817142572}
 --- !u!212 &212591429356407306
