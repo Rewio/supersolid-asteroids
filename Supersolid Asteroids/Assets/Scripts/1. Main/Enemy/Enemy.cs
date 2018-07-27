@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Enemy : BoundaryController {
+public class Enemy : BoundedEntity {
 
 	//============================================================
 	// Constants:

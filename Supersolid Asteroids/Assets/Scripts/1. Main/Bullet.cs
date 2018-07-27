@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Bullet : BoundaryController {
+public class Bullet : BoundedEntity {
 
 	//============================================================
 	// Inspector Variables:

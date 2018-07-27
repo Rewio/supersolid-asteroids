@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class BoundaryController : MonoBehaviour {
+/// <summary>
+/// Responsible for ensuring objects stay within the bounds of the camera.
+/// </summary>
+public class BoundedEntity : MonoBehaviour {
 
 	//============================================================
 	// Inspector Variables:

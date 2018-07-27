@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Asteroid : BoundaryController {
+public class Asteroid : BoundedEntity {
 
 	//============================================================
 	// Constants:
