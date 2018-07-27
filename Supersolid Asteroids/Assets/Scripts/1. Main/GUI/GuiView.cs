@@ -4,12 +4,27 @@
 public class GuiView : MonoBehaviour {
 
 	//============================================================
+	// Type Definitions:
+	//============================================================
+
+	public enum States {
+		Visible, 
+		Hidden
+	}
+
+	//============================================================
 	// Inspector Variables:
 	//============================================================
 
 	[Header("Base")]
 
 	[SerializeField] private CanvasGroup canvasGroup;
+
+	//============================================================
+	// Public Properties:
+	//============================================================
+
+	public States State { get; private set; }
 
 	//============================================================
 	// Unity Lifecycle:
@@ -26,10 +41,12 @@ public class GuiView : MonoBehaviour {
 	//============================================================
 
 	public void HideView() {
+		State = States.Hidden;
 		canvasGroup.alpha = 0;
 	}
 
 	public void ShowView() {
+		State = States.Visible;
 		canvasGroup.alpha = 1;
 	}
 

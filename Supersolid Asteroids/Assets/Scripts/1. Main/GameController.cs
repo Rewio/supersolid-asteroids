@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
 
 	public static event Helper.EventHandler NewGame;
 	public static event Helper.EventHandler GameOver;
+	public static event Helper.EventHandler GamePaused;
 
 	//============================================================
 	// Inspector Variables:
@@ -35,20 +36,18 @@ public class GameController : MonoBehaviour {
 	// Private Fields:
 	//============================================================
 
-	[SerializeField]
 	private int wavesSurvived;
 
 	private bool isPlayingGame;
 	private bool isGamePaused;
 
-	[SerializeField]
 	private int asteroidSplitAmount = 2;
-
-	[SerializeField]
-	private int enemySpawnAmount = 0;
+	private int enemySpawnAmount;
 
 	private bool allAsteroidsDestroyed;
 	private bool allEnemiesDestroyed;
+
+	private bool hasLostFocus;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -66,12 +65,8 @@ public class GameController : MonoBehaviour {
 		if (!isPlayingGame) return;
 
 		// allows for pausing the game, also force pauses if the application loses focus
-		if ((Input.GetKeyDown(KeyCode.P) && !isGamePaused) || !Application.isFocused) {
-			isGamePaused = true;
-			Time.timeScale = 0;
-		} else if (Input.GetKeyDown(KeyCode.P) && isGamePaused) {
-			isGamePaused = false;
-			Time.timeScale = 1;
+		if (Input.GetKeyDown(KeyCode.P) || !Application.isFocused && !hasLostFocus) {
+			PauseGame();
 		}
 	}
 
@@ -190,6 +185,24 @@ public class GameController : MonoBehaviour {
 		// otherwise, tell the controller how many enemies need to be spawned this wave and flag that they are to be killed
 		enemyController.SetupEnemySpawning(numEnemiesToSpawn);
 		allEnemiesDestroyed = false;
+	}
+
+	private void PauseGame() {
+
+		// flag that we have lost focus, even if we haven't, otherwise it gets called constantly in update.
+		hasLostFocus = !hasLostFocus;
+
+		if (isGamePaused) {
+			isGamePaused = false;
+			Time.timeScale = 1;
+		}
+		else {
+			isGamePaused = true;
+			Time.timeScale = 0;
+		}
+
+		if (GamePaused == null) return;
+		GamePaused.Invoke();
 	}
 
 }
