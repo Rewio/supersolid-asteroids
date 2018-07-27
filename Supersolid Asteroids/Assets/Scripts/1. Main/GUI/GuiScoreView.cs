@@ -33,6 +33,7 @@ public class GuiScoreView : GuiView {
 	//============================================================
 
 	private int currentScore;
+	private bool canIncreaseScore;
 
 	private int scoreWhenNewLifeGranted = SCORE_NEW_LIFE_INCREMENT;
 
@@ -42,8 +43,10 @@ public class GuiScoreView : GuiView {
 
 	protected void OnEnable() {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
+
 		GameController.NewGame     += GameController_NewGame;
 		GameController.GameOver    += GameController_GameOver;
+
 		Enemy.EnemyDestroyed += Enemy_EnemyDestroyed;
 	}
 
@@ -53,8 +56,10 @@ public class GuiScoreView : GuiView {
 
 	protected void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
+
 		GameController.NewGame     -= GameController_NewGame;
 		GameController.GameOver    -= GameController_GameOver;
+
 		Enemy.EnemyDestroyed -= Enemy_EnemyDestroyed;
 	}
 
@@ -84,6 +89,9 @@ public class GuiScoreView : GuiView {
 
 	private void GameController_NewGame() {
 
+		// flag that the score can once again be increased
+		canIncreaseScore = true;
+
 		// reset our new life score
 		scoreWhenNewLifeGranted = SCORE_NEW_LIFE_INCREMENT;
 
@@ -94,6 +102,9 @@ public class GuiScoreView : GuiView {
 
 	private void GameController_GameOver() {
 
+		// flag that as the game has ended, we should no-longer increase the score
+		canIncreaseScore = false;
+
 		// if the game ends, update the player data object with the players score
 		PlayerData.PlayerScore = currentScore;
 	}
@@ -103,6 +114,10 @@ public class GuiScoreView : GuiView {
 	//============================================================
 
 	private void IncreaseScore(int additionalScore) {
+
+		// if the game has ended, stop increasing the score
+		if (!canIncreaseScore) return;
+
 		currentScore += additionalScore;
 		scoreText.text = currentScore.ToString();
 
