@@ -73,12 +73,12 @@ public class GuiGameView : GuiView {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		GameController.NewGame += GameController_NewGame;
 		GameController.GamePaused += GameController_GamePaused;
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		GameController.GameOver   -= GameController_GameOver;
 		GameController.NewGame    -= GameController_NewGame;
 		GameController.GamePaused -= GameController_GamePaused;
@@ -111,7 +111,7 @@ public class GuiGameView : GuiView {
 	}
 
 	private void GameController_GamePaused() {
-		if (gamePausedView.State == GuiView.States.Hidden) {
+		if (gamePausedView.State == VisibilityStates.Hidden) {
 			gamePausedView.ShowView();
 		}
 		else {

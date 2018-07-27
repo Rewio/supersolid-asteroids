@@ -7,7 +7,7 @@ public class GuiView : MonoBehaviour {
 	// Type Definitions:
 	//============================================================
 
-	public enum States {
+	public enum VisibilityStates {
 		Visible, 
 		Hidden
 	}
@@ -24,13 +24,13 @@ public class GuiView : MonoBehaviour {
 	// Public Properties:
 	//============================================================
 
-	public States State { get; private set; }
+	public VisibilityStates State { get; private set; }
 
 	//============================================================
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnValidate() {
+	protected void OnValidate() {
 
 		// hooks up the inspector variable with the attached component in the editor, and sets up its default values
 		canvasGroup = GetComponent<CanvasGroup>();
@@ -41,12 +41,12 @@ public class GuiView : MonoBehaviour {
 	//============================================================
 
 	public void HideView() {
-		State = States.Hidden;
+		State = VisibilityStates.Hidden;
 		canvasGroup.alpha = 0;
 	}
 
 	public void ShowView() {
-		State = States.Visible;
+		State = VisibilityStates.Visible;
 		canvasGroup.alpha = 1;
 	}
 

@@ -38,11 +38,11 @@ public class GuiHighScoreView : GuiView {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		newGameButton.onClick.AddListener(NewGameButtonClicked);
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		newGameButton.onClick.RemoveAllListeners();
 	}
 

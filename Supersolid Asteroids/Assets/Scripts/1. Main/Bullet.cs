@@ -40,7 +40,7 @@ public class Bullet : BoundaryController {
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D col) {
+	protected void OnCollisionEnter2D(Collision2D col) {
 
 		// we've collided with something, we must be destroyed
 		Destroy(gameObject);

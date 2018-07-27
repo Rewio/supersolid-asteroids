@@ -59,12 +59,12 @@ public class AsteroidController : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
 		GameController.NewGame     += GameController_NewGame;
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
 		GameController.NewGame     -= GameController_NewGame;
 	}

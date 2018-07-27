@@ -54,13 +54,13 @@ public class PlayerController : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		Player.PlayerDestroyed += Player_PlayerDestroyed; 
 		GameController.NewGame += GameController_NewGame;
 		GuiScoreView.NewLifeEarned  += GuiScoreView_NewLifeEarned;
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		Player.PlayerDestroyed -= Player_PlayerDestroyed;
 		GameController.NewGame -= GameController_NewGame;
 		GuiScoreView.NewLifeEarned  -= GuiScoreView_NewLifeEarned;

@@ -41,13 +41,13 @@ public class EnemyController : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		Enemy.EnemyDestroyed   += Enemy_EnemyDestroyed;
 		GameController.NewGame += GameController_NewGame;
 		PlayerController.NewPlayer += PlayerController_NewPlayer;
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		Enemy.EnemyDestroyed   -= Enemy_EnemyDestroyed;
 		GameController.NewGame -= GameController_NewGame;
 		PlayerController.NewPlayer -= PlayerController_NewPlayer;

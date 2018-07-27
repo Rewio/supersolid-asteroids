@@ -34,14 +34,14 @@ public class SceneController : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		GuiMenuView.PlayGameEvent     += GuiMenuView_PlayGame;
 		GuiMenuView.HighScoresEvent   += GuiMenuView_HighScores;
 		GuiGameView.GameFinishedEvent += GuiGameView_GameFinished;
 		GuiHighScoreView.NewGameEvent += GuiHighScoreView_NewGame;
 	}
 
-	private void Start() {
+	protected void Start() {
 
 		// setup the file directory and save file
 		FileUtil.Setup();
@@ -58,7 +58,7 @@ public class SceneController : MonoBehaviour {
 		ChangeToNextState();
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		GuiMenuView.PlayGameEvent     -= GuiMenuView_PlayGame;
 		GuiMenuView.HighScoresEvent   -= GuiMenuView_HighScores;
 		GuiGameView.GameFinishedEvent -= GuiGameView_GameFinished;

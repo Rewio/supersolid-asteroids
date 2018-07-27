@@ -31,19 +31,19 @@ public class GuiLivesView : GuiView {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		PlayerController.RemainingLivesUpdate += PlayerController_RemainingLivesUpdate;
 
 		GameController.NewGame += GameController_NewGame;
 		GuiScoreView.NewLifeEarned  += GuiScoreView_NewLifeEarned;
 	}
 
-	private void Start() {
+	protected void Start() {
 		playersRemainingLives = NUM_STARTING_LIVES;
 		viewRectDimensions = new Vector2(widthPerLife * NUM_STARTING_LIVES, VIEW_RECT_HEIGHT);
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		PlayerController.RemainingLivesUpdate -= PlayerController_RemainingLivesUpdate;
 
 		GameController.NewGame -= GameController_NewGame;

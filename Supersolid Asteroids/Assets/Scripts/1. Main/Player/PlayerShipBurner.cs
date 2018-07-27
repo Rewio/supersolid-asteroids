@@ -22,11 +22,11 @@ public class PlayerShipBurner : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void Start() {
+	protected void Start() {
 		StartCoroutine(burnerStatusToggleEnumerator = BurnerStatusToggleCoroutine());
 	}
 
-	private void Update() {
+	protected void Update() {
 
 		// flag that we are moving so we can start toggling the burner on and off.
 		if (Input.GetKey(KeyCode.W)) {
@@ -39,7 +39,7 @@ public class PlayerShipBurner : MonoBehaviour {
 		}
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		StopCoroutine(burnerStatusToggleEnumerator);
 		burnerStatusToggleEnumerator = null;
 	}

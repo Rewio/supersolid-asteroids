@@ -53,13 +53,13 @@ public class GameController : MonoBehaviour {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		AsteroidController.AllAsteroidsDestroyed += AsteroidController_AllAsteroidsDestroyed;
 		PlayerController.NoLivesRemaining += PlayerController_NoLivesRemaining;
 		EnemyController.AllEnemiesDestroyed += EnemyController_AllEnemiesDestroyed;
 	}
 
-	private void Update() {
+	protected void Update() {
 
 		// if we're not playing the game, we don't need access to these controls
 		if (!isPlayingGame) return;
@@ -70,7 +70,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		AsteroidController.AllAsteroidsDestroyed -= AsteroidController_AllAsteroidsDestroyed;
 		PlayerController.NoLivesRemaining -= PlayerController_NoLivesRemaining;
 		EnemyController.AllEnemiesDestroyed -= EnemyController_AllEnemiesDestroyed;

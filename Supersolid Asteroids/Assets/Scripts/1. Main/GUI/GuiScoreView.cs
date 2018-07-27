@@ -40,18 +40,18 @@ public class GuiScoreView : GuiView {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		Asteroid.AsteroidDestroyedEvent += Asteroid_AsteroidDestroyed;
 		GameController.NewGame     += GameController_NewGame;
 		GameController.GameOver    += GameController_GameOver;
 		Enemy.EnemyDestroyed += Enemy_EnemyDestroyed;
 	}
 
-	private void Start() {
+	protected void Start() {
 		currentScore = int.Parse(scoreText.text);
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		Asteroid.AsteroidDestroyedEvent -= Asteroid_AsteroidDestroyed;
 		GameController.NewGame     -= GameController_NewGame;
 		GameController.GameOver    -= GameController_GameOver;

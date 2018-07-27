@@ -39,12 +39,12 @@ public class GuiMenuView : GuiView {
 	// Unity Lifecycle:
 	//============================================================
 
-	private void OnEnable() {
+	protected void OnEnable() {
 		playGameButton.onClick.AddListener(ButtonsOnClick(Events.PlayGame));
 		highScoresButton.onClick.AddListener(ButtonsOnClick(Events.HighScores));
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		playGameButton.onClick.RemoveAllListeners();
 		highScoresButton.onClick.RemoveAllListeners();
 	}

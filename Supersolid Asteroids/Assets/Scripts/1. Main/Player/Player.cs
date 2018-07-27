@@ -81,7 +81,7 @@ public class Player : BoundaryController {
 		}
 	}
 
-	private void FixedUpdate() {
+	protected void FixedUpdate() {
 
 		// responsible for moving the player forwards
 		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
@@ -96,8 +96,7 @@ public class Player : BoundaryController {
 		}
 	}
 
-	// ReSharper disable once UnusedParameter.Local
-	private void OnCollisionEnter2D(Collision2D col) {
+	protected void OnCollisionEnter2D(Collision2D col) {
 
 		// alert those that are listening that we have been destroyed
 		if (PlayerDestroyed != null) {

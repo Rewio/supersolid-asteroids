@@ -101,7 +101,7 @@ public class Enemy : BoundaryController {
 		Destroy(gameObject);
 	}
 
-	private void OnDisable() {
+	protected void OnDisable() {
 		GameController.GameOver -= GameController_GameOver;
 
 		if (movementChangerEnumerator == null) return;
