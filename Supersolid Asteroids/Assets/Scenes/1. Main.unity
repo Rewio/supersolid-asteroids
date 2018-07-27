@@ -301,6 +301,10 @@ MonoBehaviour:
   - {fileID: 114741571682224848, guid: 613b1175efe20ea46bf1a5eaf39e1f59, type: 2}
   - {fileID: 114464042138005320, guid: bbe544c550aeda3489481b84ec886aba, type: 2}
   - {fileID: 114631071560827514, guid: 8f5e2c3632ec9ad43a179acea231ec03, type: 2}
+  - {fileID: 114090871752812758, guid: 9df6e09e96e638847b0d0a2801e8ed9d, type: 2}
+  - {fileID: 114478789272210034, guid: e7bc1b1eaedcf3a49b60ce5e3b9b53ee, type: 2}
+  - {fileID: 114796631692448224, guid: 69dc6bc612c055e4a8f532c2ca7f5ee0, type: 2}
+  - {fileID: 114470493426621932, guid: 3eb0b7c2b378ff04cac13334398ca8e8, type: 2}
   mediumAsteroids:
   - {fileID: 114186320929427870, guid: 69f25f1a477675847a9e9e1e2a2115fd, type: 2}
   - {fileID: 114499505372929498, guid: ba0680114e65c754d906b5d428ed93f5, type: 2}
