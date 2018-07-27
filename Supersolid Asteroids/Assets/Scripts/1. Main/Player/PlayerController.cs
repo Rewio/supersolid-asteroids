@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
@@ -11,14 +12,14 @@ public class PlayerController : MonoBehaviour {
 	private const float PLAYER_RESPAWN_TIME = 2f;
 	private const float PLAYER_INVULN_TIME  = 2f;
 
-	private const float LIFE_DEDUCTION_COOLDOWN = 2f;
+	private const float LIFE_DEDUCTION_COOLDOWN = 1f;
 
 	//============================================================
 	// Delegates:
 	//============================================================
 
 	public delegate void RemainingLivesUpdateDelegate(int remainingLives);
-	public delegate void GetPlayerDelegate(Transform thePlayer);
+	public delegate void NewPlayerObjectDelegate(Transform newPlayerTransform);
 
 	//============================================================
 	// Events:
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour {
 
 	public static event RemainingLivesUpdateDelegate RemainingLivesUpdate;
 	public static event Helper.EventHandler NoLivesRemaining;
-	public static event GetPlayerDelegate GetPlayer;
+	public static event NewPlayerObjectDelegate NewPlayer;
 
 	//============================================================
 	// Inspector Variables:
@@ -59,14 +60,6 @@ public class PlayerController : MonoBehaviour {
 		GuiScoreView.NewLifeEarned  += GuiScoreView_NewLifeEarned;
 	}
 
-	private void Update() {
-
-		// keep checking if someone needs the player position
-		if (GetPlayer != null && player != null) {
-			GetPlayer.Invoke(player.transform);
-		}
-	}
-
 	private void OnDisable() {
 		Player.PlayerDestroyed -= Player_PlayerDestroyed;
 		GameController.NewGame -= GameController_NewGame;
@@ -81,8 +74,10 @@ public class PlayerController : MonoBehaviour {
 
 		// slight edge case where player can collide with two asteroids simultaneously
 		// this prevents the loss of two lives in that event
-		timeLastLifeRemoved = Time.time + LIFE_DEDUCTION_COOLDOWN;
-		if (timeLastLifeRemoved > Time.time) {
+		if (Time.time > timeLastLifeRemoved) {
+
+			// add to the timer to prevent extra loss
+			timeLastLifeRemoved = Time.time + LIFE_DEDUCTION_COOLDOWN;
 
 			// remove a life from the players remaining lives
 			playersRemainingLives = playersRemainingLives - 1;
@@ -129,6 +124,11 @@ public class PlayerController : MonoBehaviour {
 		// respawn the player in the centre of the play area
 		player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, transform);
 		player.Init(bulletContainer, invulnerabilityDuration);
+
+		// signal a new player has spawned, and to update transforms if necessary
+		if (NewPlayer != null) {
+			NewPlayer.Invoke(player.transform);
+		}
 	}
 
 }

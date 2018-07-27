@@ -34,15 +34,16 @@ public class Player : BoundaryController {
 
 	[Space(Helper.INSPECTOR_SPACE)]
 
+	[SerializeField] private GameObject deathParticles;
 	[SerializeField] private AudioSource audioSource;
 
 	//============================================================
 	// Private Fields:
 	//============================================================
 
-	public bool isInitialised;
+	private bool isInitialised;
 
-	public Transform bulletContainer;
+	private Transform bulletContainer;
 
 	//============================================================
 	// Unity Lifecycle:
@@ -104,6 +105,7 @@ public class Player : BoundaryController {
 		}
 
 		// then destroy the gameobject
+		Instantiate(deathParticles, transform.position, transform.rotation);
 		Destroy(gameObject);
 	}
 
