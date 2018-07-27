@@ -58,6 +58,12 @@ public class SceneController : MonoBehaviour {
 		ChangeToNextState();
 	}
 
+	protected void Update() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Application.Quit();
+		}
+	}
+
 	protected void OnDisable() {
 		GuiMenuView.PlayGameEvent     -= GuiMenuView_PlayGame;
 		GuiMenuView.HighScoresEvent   -= GuiMenuView_HighScores;
